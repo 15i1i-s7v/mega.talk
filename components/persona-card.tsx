@@ -4,7 +4,11 @@ import { PERSONA } from "@/lib/data";
 import { useCallState } from "@/lib/call-state-context";
 import { Phone, PhoneOff, Loader2 } from "lucide-react";
 
-export function PersonaCard() {
+export function PersonaCard({
+  onShowAnalysis,
+}: {
+  onShowAnalysis?: () => void;
+}) {
   const { callState, startCall, endCall } = useCallState();
 
   const handleCallToggle = async () => {
@@ -20,9 +24,7 @@ export function PersonaCard() {
 
   return (
     <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden sticky top-20">
-      {/* Card Header */}
       <div className="p-5">
-        {/* Avatar placeholder */}
         <div className="flex justify-center mb-4">
           <div className="relative">
             <div className="w-20 h-20 rounded-full bg-gradient-to-br from-accent/20 to-amber-300/20 flex items-center justify-center border-2 border-border">
@@ -40,15 +42,12 @@ export function PersonaCard() {
         <p className="text-sm text-muted text-center">{PERSONA.role}</p>
         <p className="text-xs text-muted text-center">{PERSONA.company}</p>
 
-        {/* Difficulty */}
         <div className="flex justify-center mt-3 gap-0.5">
           {Array.from({ length: 5 }).map((_, i) => (
             <span
               key={i}
               className={`text-sm ${
-                i < PERSONA.difficulty
-                  ? "text-warning"
-                  : "text-border-dark"
+                i < PERSONA.difficulty ? "text-warning" : "text-border-dark"
               }`}
             >
               ★
@@ -59,10 +58,8 @@ export function PersonaCard() {
           </span>
         </div>
 
-        {/* Divider */}
         <div className="my-4 border-t border-border" />
 
-        {/* Background */}
         <div className="space-y-3 mb-4">
           <h4 className="text-xs font-semibold text-muted uppercase tracking-wider">
             Hintergrund
@@ -80,7 +77,6 @@ export function PersonaCard() {
           </ul>
         </div>
 
-        {/* Current Team */}
         <div className="space-y-3 mb-4">
           <h4 className="text-xs font-semibold text-muted uppercase tracking-wider">
             Team & Betrieb
@@ -98,7 +94,6 @@ export function PersonaCard() {
           </ul>
         </div>
 
-        {/* Languages */}
         <div className="space-y-2 mb-5">
           {PERSONA.languages.map((lang, idx) => (
             <div
@@ -113,7 +108,6 @@ export function PersonaCard() {
         </div>
       </div>
 
-      {/* Call button — bottom sticky */}
       <div className="p-5 pt-0">
         <button
           onClick={handleCallToggle}

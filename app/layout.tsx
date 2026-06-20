@@ -28,9 +28,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "re:train — KI-Coaching für Kaltakquise",
+  title: "MEGA.TALK — Observability Layer für Outbound-Engines",
   description:
-    "Trainiere deine Vertriebsgespräche mit KI-gestützten Personas basierend auf echten Leitfäden.",
+    "GDPR-natives Call-Intelligence-System. One-Sided Recording, AI-Scoring, Script Adherence.",
 };
 
 export default function RootLayout({
