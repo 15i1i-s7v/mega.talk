@@ -43,7 +43,7 @@ export function CallControls({
 
   useEffect(() => {
     if (isConnected && callState === "connecting") {
-      toast.success("Verbunden mit Thomas Maier");
+      toast.success("Verbunden mit Leonie Hartmann");
     }
   }, [isConnected, callState]);
 
@@ -86,13 +86,13 @@ export function CallControls({
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-card/95 backdrop-blur-md border-t border-border shadow-[0_-4px_20px_rgba(0,0,0,0.06)] z-40">
+    <div className="fixed bottom-0 left-0 right-0 bg-card/90 backdrop-blur-xl border-t border-border shadow-[0_-12px_40px_rgba(0,0,0,0.38)] z-40">
       <div className="max-w-7xl mx-auto px-4 py-4">
         {callState === "idle" && (
           <div className="flex items-center justify-center gap-3">
             <button
               onClick={handleStartCall}
-              className="group inline-flex items-center gap-2.5 px-6 py-3 rounded-xl bg-accent text-white font-semibold text-sm hover:bg-accent-hover transition-colors shadow-sm"
+              className="group inline-flex items-center gap-2.5 px-6 py-3 rounded-xl mega-button text-[#2a1c08] font-semibold text-sm transition-all shadow-sm mega-hover-lift"
             >
               <Sparkles className="w-4 h-4" />
               Training starten
@@ -102,10 +102,10 @@ export function CallControls({
 
         {callState === "connecting" && (
           <div className="flex items-center justify-center gap-3">
-            <div className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-accent/10 border border-accent/20">
+            <div className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-accent/10 border border-accent/20 animate-glow-pulse">
               <Loader2 className="w-4 h-4 animate-spin text-accent" />
               <span className="text-sm font-medium text-foreground">
-                Verbinde mit Thomas Maier...
+                Verbinde mit Leonie Hartmann...
               </span>
             </div>
           </div>
@@ -137,7 +137,7 @@ export function CallControls({
 
             <button
               onClick={handleEndCall}
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-error text-white font-semibold text-sm hover:bg-[#B03030] transition-colors"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-error text-white font-semibold text-sm hover:bg-[#B03030] transition-colors mega-hover-lift"
             >
               <PhoneOff className="w-4 h-4" />
               Beenden
@@ -148,7 +148,7 @@ export function CallControls({
         {(callState === "ended" || isProcessing) && (
           <div className="flex items-center justify-center gap-3">
             {isProcessing ? (
-              <div className="flex items-center gap-3 px-5 py-3 rounded-xl bg-background border border-border">
+              <div className="flex items-center gap-3 px-5 py-3 rounded-xl bg-background border border-border mega-shimmer">
                 <Loader2 className="w-4 h-4 animate-spin text-accent" />
                 <div>
                   <p className="text-sm font-medium text-foreground">
@@ -167,7 +167,7 @@ export function CallControls({
                 {onShowAnalysis && (
                   <button
                     onClick={onShowAnalysis}
-                    className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-accent text-white font-semibold text-sm hover:bg-accent-hover transition-colors shadow-sm"
+                    className="inline-flex items-center gap-2 px-5 py-3 rounded-xl mega-button text-[#2a1c08] font-semibold text-sm transition-colors shadow-sm mega-hover-lift"
                   >
                     <BarChart3 className="w-4 h-4" />
                     Auswertung ansehen
@@ -175,7 +175,7 @@ export function CallControls({
                 )}
                 <button
                   onClick={handleTryAgain}
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-background border border-border text-foreground font-semibold text-sm hover:bg-accent/5 transition-colors"
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-background border border-border text-foreground font-semibold text-sm hover:bg-accent/5 transition-colors mega-hover-lift"
                 >
                   <Phone className="w-4 h-4" />
                   Erneut versuchen

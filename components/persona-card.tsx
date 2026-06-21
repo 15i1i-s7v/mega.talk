@@ -23,11 +23,11 @@ export function PersonaCard({
   const isConnecting = callState === "connecting";
 
   return (
-    <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden sticky top-20">
+    <div className="mega-panel rounded-[24px] overflow-hidden sticky top-20 mega-shimmer">
       <div className="p-5">
         <div className="flex justify-center mb-4">
           <div className="relative">
-            <div className="w-20 h-20 rounded-full bg-gradient-to-br from-accent/20 to-amber-300/20 flex items-center justify-center border-2 border-border">
+            <div className="w-20 h-20 rounded-full bg-gradient-to-br from-accent/20 to-amber-300/10 flex items-center justify-center border-2 border-border animate-glow-pulse">
               <span className="text-2xl font-display font-semibold text-accent">
                 TM
               </span>
@@ -112,10 +112,10 @@ export function PersonaCard({
         <button
           onClick={handleCallToggle}
           disabled={isConnecting}
-          className={`w-full py-3 rounded-xl font-semibold text-sm transition-all shadow-sm flex items-center justify-center gap-2 ${
+          className={`w-full py-3 rounded-xl font-semibold text-sm transition-all shadow-sm flex items-center justify-center gap-2 mega-hover-lift ${
             isCallActive
               ? "bg-error text-white hover:bg-[#B03030]"
-              : "bg-accent text-white hover:bg-accent-hover"
+              : "mega-button text-[#2a1c08]"
           } disabled:opacity-60 disabled:cursor-not-allowed`}
         >
           {isConnecting ? (

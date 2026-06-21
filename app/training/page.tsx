@@ -57,7 +57,7 @@ export default function TrainingPage() {
                   Run the persona simulation, hold script discipline, and close for a next step. Scoreboard follows immediately after the call ends.
                 </p>
               </div>
-              <div className="mega-pill">Thomas Maier · Active Persona</div>
+              <div className="mega-pill">Leonie Hartmann · Active Persona</div>
             </div>
           </section>
           {showAnalysis ? (
