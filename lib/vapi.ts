@@ -1,44 +1,11 @@
+"use client";
+
 import { useEffect, useRef, useState } from "react";
 import Vapi from "@vapi-ai/web";
 
 export interface TranscriptMessage {
-  role: "assistant" | "user";
+  role: "user" | "assistant" | "system";
   text: string;
-  timestamp: number;
-}
-
-interface AssistantCredentials {
-  assistantId: string;
-  publicKey: string;
-}
-
-let globalVapiInstance: Vapi | null = null;
-let globalVapiKey: string | null = null;
-let isStarting = false;
-
-function getOrCreateVapi(publicKey: string): Vapi {
-  if (globalVapiInstance && globalVapiKey === publicKey) {
-    return globalVapiInstance;
-  }
-  destroyVapi();
-  // startAudioOff: true delays microphone initialization until we explicitly
-  // unmute. This avoids the Krisp/WASM crash in Firefox when Daily cold-starts
-  // the audio processor.
-  globalVapiInstance = new Vapi(publicKey, undefined, undefined, {
-    startAudioOff: true,
-  });
-  globalVapiKey = publicKey;
-  return globalVapiInstance;
-}
-
-function destroyVapi() {
-  try {
-    globalVapiInstance?.stop?.();
-  } catch {
-    // ignore
-  }
-  globalVapiInstance = null;
-  globalVapiKey = null;
 }
 
 export function useVapi() {
@@ -49,146 +16,196 @@ export function useVapi() {
 
   useEffect(() => {
     return () => {
-      vapiRef.current?.stop?.();
-      vapiRef.current = null;
+      vapiRef.current?.stop();
     };
   }, []);
 
   return {
-    start: async (onTranscript?: (messages: TranscriptMessage[]) => void) => {
-      if (isStarting) {
-        throw new Error("Call is already starting");
-      }
-      isStarting = true;
+    start: async (setTranscript?: React.Dispatch<React.SetStateAction<TranscriptMessage[]>>) => {
       setError(null);
 
-      let credentials: AssistantCredentials;
-      try {
-        const res = await fetch("/api/vapi-assistant");
-        if (!res.ok) {
-          const data = await res.json().catch(() => ({}));
-          throw new Error(data.error || "Failed to load assistant credentials");
-        }
-        credentials = await res.json();
-      } catch (err) {
-        const message = err instanceof Error ? err.message : "Failed to load assistant";
-        setError(message);
-        isStarting = false;
-        throw err;
+      const publicKey = process.env.NEXT_PUBLIC_VAPI_PUBLIC_KEY;
+      if (!publicKey) {
+        const msg = "VAPI public key not configured";
+        setError(msg);
+        throw new Error(msg);
       }
 
-      // Singleton: reuse or create one Vapi instance per public key.
-      const vapi = getOrCreateVapi(credentials.publicKey);
-      vapiRef.current = vapi;
+      // Pre-warm microphone to avoid Krisp/WASM init failures.
+      let audioTrack: MediaStreamTrack | undefined;
+      try {
+        const warmupStream = await navigator.mediaDevices.getUserMedia({
+          audio: true,
+        });
+        [audioTrack] = warmupStream.getAudioTracks();
+      } catch (micErr) {
+        console.warn(
+          "Microphone warm-up failed, falling back to default:",
+          micErr,
+        );
+      }
 
-      // Collect transcript messages during the call.
-      const transcript: TranscriptMessage[] = [];
-      const pushTranscript = (role: "assistant" | "user", text: string) => {
-        transcript.push({ role, text, timestamp: Date.now() });
-        onTranscript?.([...transcript]);
-      };
+      try {
+        const vapi = audioTrack
+          ? new Vapi(publicKey, undefined, undefined, {
+              audioSource: audioTrack,
+            })
+          : new Vapi(publicKey);
+        vapiRef.current = vapi;
 
-      const onCallStart = () => {
-        setIsConnected(true);
-        setError(null);
-        // After the call object exists, explicitly enable microphone input.
-        setTimeout(() => {
-          try {
-            vapi.setMuted(false);
-          } catch {
-            // ignore
+        vapi.on("call-start", () => {
+          setIsConnected(true);
+          setError(null);
+        });
+        vapi.on("call-end", () => {
+          setIsConnected(false);
+          setIsSpeaking(false);
+        });
+        vapi.on("speech-start", () => setIsSpeaking(true));
+        vapi.on("speech-end", () => setIsSpeaking(false));
+        vapi.on("message", (message: any) => {
+          if (message.type === "transcript") {
+            console.log("💬", message.transcript);
+            if (setTranscript) {
+              setTranscript((prev) => [
+                ...prev,
+                {
+                  role: message.role || "assistant",
+                  text: message.transcript || "",
+                },
+              ]);
+            }
           }
-        }, 300);
-      };
-      const onCallEnd = () => {
-        setIsConnected(false);
-        setIsSpeaking(false);
-        isStarting = false;
-      };
-      const onSpeechStart = () => setIsSpeaking(true);
-      const onSpeechEnd = () => setIsSpeaking(false);
-      const onMessage = (message: any) => {
-        if (message.type === "transcript") {
-          const text = message.transcript || "";
-          const role = message.role === "assistant" ? "assistant" : "user";
-          pushTranscript(role, text);
-        }
-        if (message.type === "conversation-update" && Array.isArray(message.conversation)) {
-          const normalized: TranscriptMessage[] = message.conversation
-            .filter((entry: any) => typeof entry?.role === "string" && typeof entry?.content === "string")
-            .map((entry: any) => ({
-              role: entry.role === "assistant" ? "assistant" : "user",
-              text: entry.content,
-              timestamp: Date.now(),
-            }));
-          transcript.length = 0;
-          transcript.push(...normalized);
-          onTranscript?.([...transcript]);
-        }
-      };
-      const onError = (err: any) => {
-        console.error("VAPI Error:", err);
-        const message = err?.message || "Vapi failed to start.";
-        if (/permission denied|notallowederror|microphone/i.test(message)) {
-          setError("Microphone permission is blocked. Allow microphone access in the browser and try again.");
-        } else if (/krisp|mic processor|audio processor|noise.?cancellation/i.test(message)) {
-          setError("Browser audio processor failed to initialize. Try Chrome/Edge or refresh the page.");
-        } else {
-          setError(message);
-        }
-        setIsConnected(false);
-        isStarting = false;
-      };
+        });
+        vapi.on("error", (err) => {
+          console.error("VAPI Error:", err);
+          const message = err?.message || "Vapi failed to start.";
+          if (
+            /permission denied|notallowederror|microphone/i.test(message)
+          ) {
+            setError(
+              "Microphone permission is blocked. Allow microphone access in the browser and try again.",
+            );
+          } else if (
+            /krisp|mic processor|audio processor|noise.?cancellation/i.test(
+              message,
+            )
+          ) {
+            setError(
+              "Browser audio processor failed to initialize. Try Chrome/Edge or refresh the page.",
+            );
+          } else {
+            setError(message);
+          }
+          setIsConnected(false);
+        });
 
-      // Remove old listeners to avoid duplicates.
-      vapi.off("call-start", onCallStart);
-      vapi.off("call-end", onCallEnd);
-      vapi.off("speech-start", onSpeechStart);
-      vapi.off("speech-end", onSpeechEnd);
-      vapi.off("message", onMessage);
-      vapi.off("error", onError);
+        // Inline assistant configuration — no backend API call needed.
+        // The assistant can end the call itself via the endCall tool.
+        const assistantConfig = {
+          name: "Leonie Hartmann",
+          voice: {
+            provider: "11labs" as const,
+            voiceId: "N2lSxRHaA58vqI0NIV3R",
+            model: "eleven_turbo_v2_5",
+            stability: 0.5,
+            similarityBoost: 0.75,
+          },
+          model: {
+            provider: "openai" as const,
+            model: "gpt-4",
+            temperature: 0.7,
+            messages: [
+              {
+                role: "system" as const,
+                content: `You are Leonie Hartmann, Head of Revenue Operations at Nordstern Industrietechnik. You run RevOps for a distributed B2B sales team with SDRs, AEs, and inside sales.
 
-      vapi.on("call-start", onCallStart);
-      vapi.on("call-end", onCallEnd);
-      vapi.on("speech-start", onSpeechStart);
-      vapi.on("speech-end", onSpeechEnd);
-      vapi.on("message", onMessage);
-      vapi.on("error", onError);
+COMMUNICATION STYLE:
+- Speak only in English.
+- Be precise, calm, data-driven, and direct.
+- You have no patience for generic AI-sales hype.
+- Never parrot the caller's wording back to them.
 
-      try {
-        await vapi.start(credentials.assistantId);
+CURRENT REALITY:
+- Your team has CRM, dialer, and reporting, but no clean view of conversation quality.
+- Leadership still debates forecast and coaching on gut feel.
+- You want to know which conversation patterns actually produce meetings and callbacks.
+- You are open to new tools only if they clearly reduce leadership overhead.
+
+OBJECTIONS:
+- "We already have enough dashboards."
+- "How is this different from normal conversation intelligence?"
+- "How quickly do I get usable signals instead of just transcripts?"
+- "Who actually uses this every day: sales or operations?"
+- "How do I prove real coaching impact with it?"
+
+WHAT GETS YOUR ATTENTION:
+- Specific claims about signal quality, coaching proof, meeting conversion, and pipeline discipline.
+- A clear workflow: connect calls, measure the guide, surface winning talk patterns.
+- Honest, short answers with operational relevance.
+
+HOW YOU RESPOND:
+- Start skeptical and concise.
+- Strong sellers win you with specifics, not hype.
+- Ask follow-ups like: "What would I actually see?", "How fast can this go live?", "How do you avoid another data graveyard?"
+- If it sounds relevant, become constructive and engaged.
+
+ENDING THE CALL:
+- When the conversation reaches a natural conclusion, say a polite goodbye and use the endCall tool to hang up.
+- If the caller has nothing more to ask or becomes repetitive, end the call.
+- If the caller is abusive or aggressive, end the call immediately.
+
+OPENING:
+- Start with: "Hartmann speaking."
+
+NEVER:
+- Be instantly agreeable.
+- Give long monologues.
+- Make small talk.`,
+              },
+            ],
+            // Give the assistant the ability to end the call itself
+            tools: [
+              {
+                type: "endCall" as const,
+              },
+            ],
+          },
+          transcriber: {
+            provider: "deepgram" as const,
+            model: "nova-2",
+            language: "en",
+          },
+          firstMessage: "Hartmann speaking.",
+          maxDurationSeconds: 275,
+          recordingEnabled: false,
+          clientMessages: [
+            "transcript",
+            "hang",
+            "function-call",
+            "speech-update",
+            "metadata",
+            "conversation-update",
+            "tool-calls",
+          ],
+        };
+
+        await vapi.start(assistantConfig as any);
       } catch (err) {
-        const errorMessage = err instanceof Error ? err.message : "Failed to start call";
+        const errorMessage =
+          err instanceof Error ? err.message : "Failed to start call";
         setError(errorMessage);
-        isStarting = false;
         throw err;
       }
-
-      return {
-        getTranscript: () => [...transcript],
-      };
     },
     stop: () => {
-      try {
-        vapiRef.current?.stop?.();
-      } catch {
-        // ignore
-      }
+      vapiRef.current?.stop();
     },
     setMuted: (muted: boolean) => {
-      try {
-        vapiRef.current?.setMuted(muted);
-      } catch {
-        // ignore
-      }
+      vapiRef.current?.setMuted(muted);
     },
     isConnected,
     isSpeaking,
     error,
   };
-}
-
-// Expose destroy for tests / hot reload cleanup.
-if (typeof window !== "undefined") {
-  (window as any).__destroyVapi = destroyVapi;
 }

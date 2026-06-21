@@ -9,7 +9,6 @@ import {
   Phone,
   PhoneOff,
   Loader2,
-  BarChart3,
   Sparkles,
 } from "lucide-react";
 import { toast } from "sonner";
@@ -142,27 +141,13 @@ export function CallControls({
                 </div>
               </div>
             ) : (
-              <>
-                <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-background border border-border">
-                  <span className="text-sm text-muted">Analysis ready</span>
-                </div>
-                {onShowAnalysis && (
-                  <button
-                    onClick={onShowAnalysis}
-                    className="inline-flex items-center gap-2 px-5 py-3 rounded-xl mega-button text-[#2a1c08] font-semibold text-sm transition-colors shadow-sm mega-hover-lift"
-                  >
-                    <BarChart3 className="w-4 h-4" />
-                    View analysis
-                  </button>
-                )}
-                <button
-                  onClick={handleTryAgain}
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-background border border-border text-foreground font-semibold text-sm hover:bg-accent/5 transition-colors mega-hover-lift"
-                >
-                  <Phone className="w-4 h-4" />
-                  Try again
-                </button>
-              </>
+              <button
+                onClick={handleTryAgain}
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-background border border-border text-foreground font-semibold text-sm hover:bg-accent/5 transition-colors mega-hover-lift"
+              >
+                <Phone className="w-4 h-4" />
+                Try again
+              </button>
             )}
           </div>
         )}
