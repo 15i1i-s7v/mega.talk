@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect, useRef, useState } from "react";
 import Vapi from "@vapi-ai/web";
 
@@ -16,6 +14,7 @@ interface AssistantCredentials {
 
 let globalVapiInstance: Vapi | null = null;
 let globalVapiKey: string | null = null;
+let isStarting = false;
 
 function getOrCreateVapi(publicKey: string): Vapi {
   if (globalVapiInstance && globalVapiKey === publicKey) {
@@ -57,6 +56,10 @@ export function useVapi() {
 
   return {
     start: async (onTranscript?: (messages: TranscriptMessage[]) => void) => {
+      if (isStarting) {
+        throw new Error("Call is already starting");
+      }
+      isStarting = true;
       setError(null);
 
       let credentials: AssistantCredentials;
@@ -70,6 +73,7 @@ export function useVapi() {
       } catch (err) {
         const message = err instanceof Error ? err.message : "Failed to load assistant";
         setError(message);
+        isStarting = false;
         throw err;
       }
 
@@ -99,6 +103,7 @@ export function useVapi() {
       const onCallEnd = () => {
         setIsConnected(false);
         setIsSpeaking(false);
+        isStarting = false;
       };
       const onSpeechStart = () => setIsSpeaking(true);
       const onSpeechEnd = () => setIsSpeaking(false);
@@ -120,14 +125,6 @@ export function useVapi() {
           transcript.push(...normalized);
           onTranscript?.([...transcript]);
         }
-        // Handle the assistant's endCall tool: stop the call client-side.
-        if (message.type === "function-call" && message.functionCall?.name === "endCall") {
-          try {
-            vapi.stop();
-          } catch {
-            // ignore
-          }
-        }
       };
       const onError = (err: any) => {
         console.error("VAPI Error:", err);
@@ -140,6 +137,7 @@ export function useVapi() {
           setError(message);
         }
         setIsConnected(false);
+        isStarting = false;
       };
 
       // Remove old listeners to avoid duplicates.
@@ -162,6 +160,7 @@ export function useVapi() {
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : "Failed to start call";
         setError(errorMessage);
+        isStarting = false;
         throw err;
       }
 

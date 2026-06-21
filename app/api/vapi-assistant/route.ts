@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
 
-const ASSISTANT_ID_CACHE_KEY = "vapi_assistant_id_v1";
+const ASSISTANT_ID_CACHE_KEY = "vapi_assistant_id_v2";
 
 function getEnv(key: string): string | undefined {
   return process.env[key];
@@ -17,7 +17,7 @@ function buildAssistantConfig() {
     },
     model: {
       provider: "openai",
-      model: "gpt-4",
+      model: "gpt-4o-mini",
       temperature: 0.7,
       messages: [
         {
@@ -72,7 +72,7 @@ NEVER:
       language: "en",
     },
     firstMessage: "Hartmann speaking.",
-    maxDurationSeconds: 275,
+    maxDurationSeconds: 120,
     recordingEnabled: false,
     clientMessages: [
       "transcript",
