@@ -9,28 +9,18 @@ import {
   ArrowRight,
   Shield,
 } from "lucide-react";
+import { OUTCOME_MIX, SIGNAL_OVERVIEW, VOLUME_TREND } from "@/lib/data";
 
 const STATS = [
-  { label: "Calls gescored", value: "27", icon: Target, trend: "+12 diese Woche" },
-  { label: "Ø Script Adherence", value: "74%", icon: TrendingUp, trend: "+8% vs. letzte Woche" },
-  { label: "Aktive Agents", value: "12", icon: BarChart3, trend: "3 im Coaching" },
+  { label: "Tracked Calls", value: SIGNAL_OVERVIEW.trackedCalls.toLocaleString("de-DE"), icon: Target, trend: "CSV-ground truth · anonymisiert" },
+  { label: "Callback Intent", value: `${SIGNAL_OVERVIEW.callbackIntentRate}%`, icon: TrendingUp, trend: "stärkstes Signal vor Pipeline-Weitergabe" },
+  { label: "Ø Gesprächsdauer", value: `${SIGNAL_OVERVIEW.avgCallSeconds}s`, icon: BarChart3, trend: "lange positive Gespräche liegen deutlich höher" },
   { label: "GDPR-Status", value: "Compliant", icon: Shield, trend: "One-Sided Recording" },
-];
-
-const RECENT_CALLS = [
-  { agent: "Max Mustermann", campaign: "Leiterplatten Kaltakquise", score: 78, duration: "4:23", outcome: "Positiv", date: "vor 15 Min" },
-  { agent: "Julia Schmidt", campaign: "Leiterplatten Kaltakquise", score: 65, duration: "6:01", outcome: "Wiedervorlage", date: "vor 2 Std" },
-  { agent: "Anna Weber", campaign: "Leiterplatten Kaltakquise", score: 91, duration: "5:12", outcome: "Positiv", date: "vor 3 Std" },
-  { agent: "Tim Lorenz", campaign: "Leiterplatten Kaltakquise", score: 43, duration: "3:45", outcome: "Negativ", date: "vor 4 Std" },
-  { agent: "Sarah Klein", campaign: "Leiterplatten Kaltakquise", score: 82, duration: "5:55", outcome: "Positiv", date: "vor 5 Std" },
 ];
 
 const PIPELINE_STEPS = ["SoftBCom SCC", "Ingestion", "AssemblyAI", "HuggingFace NLI", "Score"];
 
 export default function AnalysisPage() {
-  const scoreColor = (s: number) =>
-    s >= 80 ? "text-success" : s >= 60 ? "text-warning" : "text-error";
-
   return (
     <div className="min-h-screen bg-background mega-grid-glow">
       <Header />
@@ -41,7 +31,7 @@ export default function AnalysisPage() {
             <div>
               <h1 className="text-3xl sm:text-4xl text-foreground">Analysis Control Room</h1>
               <p className="mt-2 text-sm text-muted max-w-2xl">
-                Review script adherence, evidence snippets, pipeline status, and coaching opportunities in a MEGATHON-grade dark scoreboard.
+                Review anonymized outcome mix, conversation velocity, and coaching signals derived from real tracked call history.
               </p>
             </div>
             <div className="mega-pill">AssemblyAI · HF NLI · Live Scoring</div>
@@ -97,41 +87,70 @@ export default function AnalysisPage() {
           ))}
         </div>
 
-        {/* Recent Calls */}
+        <div className="grid gap-6 lg:grid-cols-2">
+          <div className="mega-panel rounded-2xl p-5">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-sm font-semibold text-foreground">Outcome Mix</h2>
+              <span className="text-xs text-muted">PII-free aggregation</span>
+            </div>
+            <div className="space-y-4">
+              {OUTCOME_MIX.map((row) => (
+                <div key={row.label}>
+                  <div className="flex items-center justify-between mb-2 text-sm">
+                    <span className="text-foreground">{row.label}</span>
+                    <span className={`${row.tone} font-semibold`}>{row.share}%</span>
+                  </div>
+                  <div className="h-2 rounded-full bg-white/5 overflow-hidden">
+                    <div className={`${row.bar} h-full rounded-full`} style={{ width: `${row.share}%` }} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="mega-panel rounded-2xl p-5">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-sm font-semibold text-foreground">Volume Cadence</h2>
+              <span className="text-xs text-muted">last observed active days</span>
+            </div>
+            <div className="flex items-end gap-3 h-44">
+              {VOLUME_TREND.map((point) => (
+                <div key={point.date} className="flex-1 flex flex-col items-center gap-2">
+                  <div className="text-[10px] text-muted">{point.count}</div>
+                  <div className="w-full rounded-t-xl bg-gradient-to-t from-accent to-mega-gold-bright/80" style={{ height: `${Math.max(10, (point.count / 218) * 120)}px` }} />
+                  <div className="text-[10px] uppercase tracking-[0.14em] text-muted">{point.date}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Signal Board */}
         <div className="mega-panel rounded-2xl overflow-hidden">
           <div className="px-5 py-4 border-b border-border flex items-center justify-between">
             <h2 className="text-sm font-semibold text-foreground">
-              Letzte Auswertungen
+              Signal Board
             </h2>
-            <span className="text-xs text-muted">27 Calls gesamt</span>
+            <span className="text-xs text-muted">enablement narrative from ground truth</span>
           </div>
           <div className="divide-y divide-border">
-            {RECENT_CALLS.map((call, i) => (
-              <div key={i} className="flex items-center justify-between px-5 py-3.5 text-sm hover:bg-accent/5 transition-colors">
+            {[
+              ["Callback intent dominates", "58%", "Reps create follow-up momentum far more often than hard positive closes."],
+              ["Positive calls are long", "448s avg", "Closed-positive conversations are materially longer than neutral or negative outcomes."],
+              ["Tag hygiene still leaks signal", "17% unknown", "Outcome discipline is a product opportunity: MEGA.TALK can force cleaner review workflows."],
+            ].map(([title, metric, note]) => (
+              <div key={title} className="flex items-center justify-between px-5 py-3.5 text-sm hover:bg-accent/5 transition-colors mega-hover-lift">
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center text-xs font-medium text-accent">
-                    {call.agent.split(" ").map((n) => n[0]).join("")}
+                    MT
                   </div>
                   <div>
-                    <p className="font-medium text-foreground">{call.agent}</p>
-                    <p className="text-xs text-muted">{call.campaign}</p>
+                    <p className="font-medium text-foreground">{title}</p>
+                    <p className="text-xs text-muted">{note}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-4 text-xs">
-                  <span className="font-mono text-muted">{call.duration}</span>
-                  <span className={`font-semibold ${scoreColor(call.score)}`}>
-                    {call.score}%
-                  </span>
-                  <span className={`px-2 py-0.5 rounded-full font-medium ${
-                    call.outcome === "Positiv"
-                      ? "bg-success/10 text-success"
-                      : call.outcome === "Wiedervorlage"
-                        ? "bg-warning/10 text-warning"
-                        : "bg-error/10 text-error"
-                  }`}>
-                    {call.outcome}
-                  </span>
-                  <span className="text-muted">{call.date}</span>
+                  <span className="font-semibold text-accent">{metric}</span>
                 </div>
               </div>
             ))}
@@ -144,7 +163,7 @@ export default function AnalysisPage() {
             Bereit für dein Training?
           </h2>
           <p className="text-sm text-muted mb-4">
-            Trainiere Kaltakquise mit Thomas Maier — live gescort gegen den Leitfaden.
+            Trainiere Discovery Calls mit Leonie Hartmann — live gescort gegen den Enablement-Leitfaden.
           </p>
           <Link
             href="/training"

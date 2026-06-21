@@ -5,40 +5,40 @@ import Link from "next/link";
 import {
   Phone,
   BarChart3,
-  Users,
   TrendingUp,
   Target,
   Play,
   ArrowRight,
 } from "lucide-react";
+import { OUTCOME_MIX, SIGNAL_FEED, SIGNAL_OVERVIEW, VOLUME_TREND } from "@/lib/data";
 
 const STATS = [
-  { label: "Trainings heute", value: "3", icon: Phone, trend: "+2 heute" },
-  { label: "Durchschnitts-Score", value: "74%", icon: TrendingUp, trend: "+8% diese Woche" },
-  { label: "Aktive Mitarbeiter", value: "12", icon: Users, trend: "3 im Training" },
+  { label: "Tracked Calls", value: SIGNAL_OVERVIEW.trackedCalls.toLocaleString("de-DE"), icon: Phone, trend: "anonymisierte Ground Truth" },
+  { label: "Callback Intent", value: `${SIGNAL_OVERVIEW.callbackIntentRate}%`, icon: TrendingUp, trend: "Wiedervorlage + persönliche Follow-ups" },
+  { label: "Ø Talk Time", value: `${SIGNAL_OVERVIEW.avgCallSeconds}s`, icon: BarChart3, trend: "über alle anonymisierten Sessions" },
   { label: "Pipeline-Status", value: "Live", icon: Target, trend: "AssemblyAI · HF Inference" },
 ];
 
 const CAMPAIGNS = [
   {
-    name: "Leiterplatten Kaltakquise",
-    persona: "Thomas Maier",
+    name: "Revenue Ops Discovery",
+    persona: "Leonie Hartmann",
     guide: "16 Schritte",
-    calls: 7,
-    avgScore: 72,
+    calls: 8484,
+    avgScore: 78,
     status: "aktiv",
   },
   {
-    name: "Elektronik-Entwicklung",
-    persona: "Dr. Andrea Fuchs",
+    name: "Coaching Delta Review",
+    persona: "Regional SDR Lead",
     guide: "12 Schritte",
     calls: 0,
     avgScore: null,
     status: "bereit",
   },
   {
-    name: "Fertigungs-Optimierung",
-    persona: "Klaus Werner",
+    name: "Signal Audit",
+    persona: "RevOps Analyst",
     guide: "10 Schritte",
     calls: 0,
     avgScore: null,
@@ -62,8 +62,8 @@ export default function Home() {
                   <p className="mega-kicker mb-4">Megathon Demo · Voice Revenue Engine</p>
                   <h1 className="text-4xl sm:text-6xl text-foreground mb-4">Train. Score. Launch.</h1>
                   <p className="text-sm sm:text-base text-muted max-w-2xl leading-relaxed">
-                    MEGA.TALK turns cold-call training into a main-stage ritual: live persona simulation,
-                    script adherence scoring, and post-call analysis wrapped in the MEGATHON launch aesthetic.
+                    MEGA.TALK turns raw call activity into coaching proof: live persona simulation,
+                    observable guide scoring, and anonymized outcome signals that show which talk tracks actually move pipeline.
                   </p>
                 </div>
                 <div className="flex flex-wrap gap-3">
@@ -81,7 +81,7 @@ export default function Home() {
               {STATS.map((stat) => (
                 <div
                   key={stat.label}
-                  className="mega-panel rounded-2xl p-5"
+                  className="mega-panel mega-hover-lift rounded-2xl p-5"
                 >
                   <div className="flex items-center justify-between mb-3">
                     <span className="text-xs text-muted uppercase tracking-[0.2em] font-semibold">
@@ -96,6 +96,47 @@ export default function Home() {
                 </div>
               ))}
             </div>
+
+            <section className="grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
+              <div className="mega-panel rounded-[28px] p-6">
+                <div className="flex items-center justify-between mb-5">
+                  <div>
+                    <p className="mega-kicker mb-2">Revenue Signal Snapshot</p>
+                    <h2 className="font-display text-2xl text-foreground">What the data actually says</h2>
+                  </div>
+                  <div className="mega-pill">PII removed · ground truth aggregated</div>
+                </div>
+                <div className="space-y-4">
+                  {OUTCOME_MIX.map((outcome) => (
+                    <div key={outcome.label}>
+                      <div className="flex items-center justify-between text-sm mb-2">
+                        <span className="text-foreground font-medium">{outcome.label}</span>
+                        <span className={`${outcome.tone} font-semibold`}>
+                          {outcome.share}% · {outcome.value.toLocaleString("de-DE")}
+                        </span>
+                      </div>
+                      <div className="h-2 rounded-full bg-white/5 overflow-hidden">
+                        <div className={`${outcome.bar} h-full rounded-full transition-all duration-700`} style={{ width: `${outcome.share}%` }} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="mega-panel rounded-[28px] p-6">
+                <p className="mega-kicker mb-2">Call Volume Cadence</p>
+                <h2 className="font-display text-2xl text-foreground mb-5">Recent spikes</h2>
+                <div className="flex items-end gap-3 h-44">
+                  {VOLUME_TREND.map((point) => (
+                    <div key={point.date} className="flex-1 flex flex-col items-center gap-2">
+                      <div className="text-[10px] text-muted">{point.count}</div>
+                      <div className="w-full rounded-t-xl bg-gradient-to-t from-accent to-mega-gold-bright/80 animate-fade-in" style={{ height: `${Math.max(10, (point.count / 218) * 120)}px` }} />
+                      <div className="text-[10px] uppercase tracking-[0.14em] text-muted">{point.date}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
 
             {/* Pipeline Banner */}
             <div className="mega-panel rounded-2xl p-4 mb-8 flex items-center justify-between">
@@ -124,9 +165,9 @@ export default function Home() {
             {/* Campaigns */}
             <div className="flex items-center justify-between mb-5">
               <h2 className="font-display text-xl text-foreground">
-                Kampagnen
+                Motions
               </h2>
-              <span className="text-xs text-muted uppercase tracking-[0.18em]">3 Kampagnen</span>
+              <span className="text-xs text-muted uppercase tracking-[0.18em]">3 Demo-Motions</span>
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -138,7 +179,7 @@ export default function Home() {
                       ? "/training"
                       : "#"
                   }
-                  className={`mega-panel rounded-2xl p-5 transition-all hover:-translate-y-0.5 ${
+                  className={`mega-panel mega-hover-lift rounded-2xl p-5 transition-all ${
                     campaign.status === "aktiv"
                       ? "border-accent/40 hover:border-accent"
                       : campaign.status === "bereit"
@@ -204,66 +245,32 @@ export default function Home() {
             {/* Recent Activity */}
             <div className="mt-10">
               <h2 className="font-display text-xl text-foreground mb-4">
-                Letzte Aktivität
+                Sales Enablement Feed
               </h2>
-              <div className="mega-panel rounded-2xl divide-y divide-border overflow-hidden">
-                {[
-                  {
-                    employee: "Max Mustermann",
-                    campaign: "Leiterplatten Kaltakquise",
-                    score: 78,
-                    duration: "4:23",
-                    date: "vor 15 Min",
-                  },
-                  {
-                    employee: "Julia Schmidt",
-                    campaign: "Leiterplatten Kaltakquise",
-                    score: 65,
-                    duration: "6:01",
-                    date: "vor 2 Std",
-                  },
-                  {
-                    employee: "Anna Weber",
-                    campaign: "Leiterplatten Kaltakquise",
-                    score: 91,
-                    duration: "5:12",
-                    date: "vor 3 Std",
-                  },
-                ].map((activity, i) => (
+              <div className="mega-panel rounded-2xl divide-y divide-border overflow-hidden mega-shimmer">
+                {SIGNAL_FEED.map((activity, i) => (
                   <div
                     key={i}
                     className="flex items-center justify-between px-5 py-3.5 text-sm"
                   >
                     <div className="flex items-center gap-3">
                       <div className="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center text-xs font-medium text-accent">
-                        {activity.employee
+                        {activity.lane
                           .split(" ")
                           .map((n) => n[0])
                           .join("")}
                       </div>
                       <div>
                         <p className="font-medium text-foreground">
-                          {activity.employee}
+                          {activity.lane}
                         </p>
                         <p className="text-xs text-muted">
-                          {activity.campaign}
+                          {activity.note}
                         </p>
                       </div>
                     </div>
                     <div className="flex items-center gap-4 text-xs text-muted">
-                      <span className="font-mono">{activity.duration}</span>
-                      <span
-                        className={`font-semibold ${
-                          activity.score >= 80
-                            ? "text-success"
-                            : activity.score >= 60
-                              ? "text-warning"
-                              : "text-error"
-                        }`}
-                      >
-                        {activity.score}%
-                      </span>
-                      <span>{activity.date}</span>
+                      <span className="font-semibold text-accent">{activity.metric}</span>
                     </div>
                   </div>
                 ))}
@@ -365,8 +372,8 @@ function WelcomeScreen({ onAccept }: { onAccept: () => void }) {
 
           <p className="text-sm text-muted mb-6 leading-relaxed">
             Trainiere deine Vertriebsmitarbeiter mit KI-gestützten Personas.
-            Der Leitfaden wird live gescort — basierend auf echten
-            Kaltakquise-Kriterien.
+            Der Leitfaden wird live gescort — basierend auf beobachtbaren
+            Revenue-Ops-Kriterien.
           </p>
 
           <div className="mb-4">

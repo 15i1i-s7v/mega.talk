@@ -1,63 +1,63 @@
 export const PERSONA = {
-  name: "Thomas Maier",
-  role: "Geschäftsführer / Inhaber",
-  company: "Maier Leiterplattentechnik GmbH",
-  industry: "Elektronikfertigung / Leiterplattenbestückung",
-  companySize: "45 Mitarbeiter, Sitz in Baden-Württemberg",
-  location: "Reutlingen, Deutschland",
-  category: "Kaltakquise",
+  name: "Leonie Hartmann",
+  role: "Head of Revenue Operations",
+  company: "Nordstern Industrietechnik GmbH",
+  industry: "Technischer Großhandel / B2B Vertrieb",
+  companySize: "68 Mitarbeiter, 3 Vertriebsstandorte in DACH",
+  location: "Kassel, Deutschland",
+  category: "Outbound Enablement",
   callType: "Erstkontakt",
 
   background: [
-    "Übernahm den Betrieb von seinem Vater vor 9 Jahren",
-    "Fertigt Leiterplattenbestückung für Industriekunden aus DACH",
-    "Schwerpunkt: Prototypen, Kleinserien, Projektanläufe",
-    "Wurde in den letzten Jahren von mehreren Vertriebsdienstleistern kontaktiert",
+    "Verantwortet Forecast-Hygiene, SDR-Steuerung und Pipeline-Reviews",
+    "Betreut ein Team aus Inbound, Outbound und Sales Ops in drei Regionen",
+    "Arbeitet mit CRM, Dialer und BI, aber ohne einheitliche Gesprächssicht",
+    "Ist skeptisch gegenüber Tools, die nur 'noch ein Dashboard' liefern",
   ],
 
   currentTeam: [
-    "3 Vertriebsmitarbeiter im Innendienst",
-    "12 Mitarbeiter in der Fertigung (SMD-Bestückung)",
-    "Kein strukturiertes CRM oder Vertriebsprozess",
-    "Aufträge kommen meist über Empfehlungen und Stammkunden",
+    "9 SDRs und 4 AEs mit stark schwankender Gesprächsqualität",
+    "Coaching findet punktuell statt, meist erst nach verlorenen Deals",
+    "Reporting ist auf CRM-Felder beschränkt, nicht auf Gesprächssignale",
+    "Führung will wissen, welche Talk-Tracks wirklich Termine erzeugen",
   ],
 
   recentActivity: [
-    "Letzte Messe: SMTconnect in Nürnberg (vor 3 Monaten)",
-    "Plant neue Bestückungslinie für 2027 (Investition ~€250k)",
-    "Sucht aktiv nach neuen Vertriebskanälen",
+    "Q3-Initiative: SQL-Quote im Mid-Market sichtbar steigern",
+    "Vergleicht aktuell AI-Assistants mit klassischen QA-Call-Reviews",
+    "Muss im nächsten Leadership-Review belastbare Coaching-Belege zeigen",
   ],
 
   languages: [
     { flag: "🇩🇪", name: "Deutsch", level: "Muttersprache" },
-    { flag: "🇬🇧", name: "Englisch", level: "Grundkenntnisse" },
+    { flag: "🇬🇧", name: "Englisch", level: "Business-sicher" },
   ],
 
-  difficulty: 4,
+  difficulty: 5,
   difficultyReason:
-    "Mittelständischer Inhaber, kennt sein Geschäft genau, wenig Zeit, skeptisch gegenüber Standard-Verkaufssprüchen",
+    "Datenstarke Ops-Leiterin, hört sofort auf schwache ROI-Behauptungen und fordert konkrete Signal- und Coaching-Beweise",
 
-  firstMessage: "Maier, Guten Morgen.",
+  firstMessage: "Hartmann, guten Tag.",
 };
 
-export const PLAYBOOK = `# Leitfaden: Kaltakquise Leiterplattenbestückung
+export const PLAYBOOK = `# Leitfaden: Outbound-Enablement für Revenue Teams
 
-Zielgruppe: Fertigungsleitung / Geschäftsführung bei mittelständischen Elektronikfertigern.
-Ziel: Terminvereinbarung für ein Kennenlerngespräch (telefonisch oder vor Ort durch Geschäftsführer).
+Zielgruppe: Revenue Operations, Inside-Sales-Leads und Vertriebsleiter in verteilten B2B-Teams.
+Ziel: Discovery-Termin zu einem messbaren Coaching- und Pipeline-Review mit MEGA.TALK vereinbaren.
 
 ---
 
-## 1. Empfang begrüßen und Name nennen
+## 1. Einstieg mit Kontext und Name
 
 **Schritt:** Begrüße den Empfang freundlich mit deinem vollständigen Namen.
 
 > "Guten Morgen, Frau/Herr …, mein Name ist [Vorname Nachname] von [Firma]."
 
-**Warum:** Der Empfang entscheidet in Sekunden, ob er dich verbindet. Ein klarer Name + Firma signalisiert Professionalität.
+**Warum:** Der erste Satz soll ruhig, präzise und vertrauenswürdig sein. Keine Show, kein Pitch zu früh.
 
 ---
 
-## 2. Um Hilfe bitten
+## 2. Kurz auf Orientierung gehen
 
 **Schritt:** Bitte den Empfang um Hilfe — das schafft Verbindlichkeit und signalisiert Respekt.
 
@@ -65,15 +65,15 @@ Ziel: Terminvereinbarung für ein Kennenlerngespräch (telefonisch oder vor Ort 
 
 ---
 
-## 3. Nach dem Ansprechpartner fragen
+## 3. Verantwortungsbereich statt Funktionsname abfragen
 
 **Schritt:** Frage nach dem richtigen Ansprechpartner für dein Thema. Zeige, dass du weisst, wonach du suchst.
 
-> "Sie kennen sich bei Ihnen ja viel besser aus als ich bisher. Wer ist denn bei Ihnen der richtige Ansprechpartner, wenn es um Leiterplattenbestückung, kleine Serien oder Prototypen geht — also um die Themen, die Entwicklung und Technik bei Ihnen unterstützen?"
+> "Wer verantwortet bei Ihnen Gesprächsqualität, Terminquote und Pipeline-Disziplin im Outbound?"
 
 ---
 
-## 4. Durchwahl erfragen
+## 4. Direkten Anschluss sichern
 
 **Schritt:** Frage nach der Durchwahl des genannten Ansprechpartners.
 
@@ -81,7 +81,7 @@ Ziel: Terminvereinbarung für ein Kennenlerngespräch (telefonisch oder vor Ort 
 
 ---
 
-## 5. Bitte um Verbindung
+## 5. Aktiv um Verbindung bitten
 
 **Schritt:** Bitte den Empfang klar darum, dich zu verbinden.
 
@@ -89,15 +89,15 @@ Ziel: Terminvereinbarung für ein Kennenlerngespräch (telefonisch oder vor Ort 
 
 ---
 
-## 6. Grund erklären (wenn der Empfang nachfragt)
+## 6. Nur bei Rückfrage den Anlass öffnen
 
 **Schritt:** Erkläre kurz dein Thema und führe mit einer Frage zur Ansprechpartner-Ermittlung zurück.
 
-> "Das sage ich Ihnen gern. Es geht um Leiterplattenbestückung in wenigen Tagen — vor allem für Prototypen, kleine Serien und Projektanläufe. Viele Unternehmen nutzen das, wenn sie kurze Zeiten, verlässliche Abläufe oder flexible Unterstützung in der Entwicklung brauchen. Wer kümmert sich bei Ihnen um diese Themen?"
+> "Gern. Wir machen sichtbar, welche Gespräche wirklich Termine, Wiedervorlagen und Pipeline-Momentum erzeugen — inklusive Coaching-Spuren für Führung und Sales Ops. Wer verantwortet das bei Ihnen?"
 
 ---
 
-## 7. Gespräch mit Entscheider bestätigen
+## 7. Erreichung positiv bestätigen
 
 **Schritt:** Bestätige positiv, dass du den richtigen Ansprechpartner erreichst hast. Nenne erneut deinen Namen und deine Firma.
 
@@ -105,53 +105,53 @@ Ziel: Terminvereinbarung für ein Kennenlerngespräch (telefonisch oder vor Ort 
 
 ---
 
-## 8. Prüfen, ob du richtig bist
+## 8. Zuständigkeit sauber verifizieren
 
 **Schritt:** Prüfe kurz, ob du beim richtigen Ansprechpartner bist.
 
-> "Bin ich bei Ihnen richtig, wenn es um Bestückung, kleine Serien oder Unterstützung in der Entwicklung geht?"
+> "Bin ich bei Ihnen richtig, wenn es um Gesprächsqualität, Coaching-Nachweise und die Frage geht, welche Talk-Tracks wirklich Pipeline erzeugen?"
 
 ---
 
-## 9. Direkt zum Punkt kommen
+## 9. Direkt in den operativen Schmerz
 
-**Schritt:** Komme direkt zum Punkt — erkläre, dass deine Firma Unternehmen bei Prototypen und kleinen Serien unterstützt.
+**Schritt:** Komme direkt zum Punkt — benenne den operativen Engpass, nicht das Tool.
 
-> "Alles klar. Dann komme ich direkt zum Punkt: Wir von [Firma] unterstützen Unternehmen bei Prototypen und kleinen Serien."
-
----
-
-## 10. Zeitlichen Vorteil nennen
-
-**Schritt:** Nenne den zeitlichen Vorteil: Baugruppen innerhalb weniger Arbeitstage statt erst nach Wochen.
-
-> "Wenn Baugruppen innerhalb weniger Arbeitstage und nicht erst nach Wochen gebraucht werden."
+> "Viele Revenue-Teams sehen heute Aktivität, aber nicht, welche Gespräche wirklich in valide nächste Schritte übersetzen. Genau dort setzt MEGA.TALK an."
 
 ---
 
-## 11. Ablauf beschreiben
+## 10. Messbaren Hebel nennen
+
+**Schritt:** Nenne den klaren Hebel: schnelleres Coaching, sauberere Termine, belastbarere Pipeline.
+
+> "Führung sieht innerhalb von Tagen, welche Gesprächsmuster Termine treiben, wo Einwände hängen bleiben und welche Reps replizierbare Signale liefern."
+
+---
+
+## 11. Ablauf in drei Schritten erklären
 
 **Schritt:** Beschreibe konkret, wie die Zusammenarbeit abläuft.
 
-> "Wir klären zu Beginn gemeinsam, welche Daten vorliegen, welche Entscheidungen noch offen sind und was in der gewünschten Zeit realistisch umsetzbar ist."
+> "Wir verbinden Calls, legen euren Leitfaden als beobachtbares Raster an und zeigen dann pro Rep, Motion und Outcome die Signale, die wirklich zu Meetings führen."
 
-> "Änderungen im Projekt stimmen wir direkt mit Fertigung und Ansprechpartner ab — ohne Umwege."
+> "Anschließend bekommt Sales Führung keine Bauchgefühle mehr, sondern sichtbare Coaching-Lücken, Conversion-Sprünge und belastbare Review-Unterlagen."
 
 ---
 
-## 12. Kundennutzen benennen
+## 12. Führungsvorteil benennen
 
 **Schritt:** Nenne einen konkreten Kundennutzen — planbare Tests, Zeitersparnis oder Sicherheit.
 
-> "Das bedeutet für Sie: Sie erhalten Baugruppen, die wie geplant in Tests oder Entwicklungsschritte einfließen können. Darüber hinaus sparen Sie Zeit im Projekt und haben Sicherheit für die nächsten Schritte, weil Sie wissen, wann genau Sie mit den Baugruppen rechnen können."
+> "Das bedeutet für Sie: weniger blindes Coaching, sauberere Forecast-Gespräche und ein klarer Nachweis, welche Gesprächsqualität tatsächlich Umsatz vorbereitet."
 
 ---
 
-## 13. Nächsten Schritt vorschlagen
+## 13. Nächsten Schritt auf Augenhöhe platzieren
 
 **Schritt:** Schlage einen konkreten nächsten Schritt vor — dass euer Geschäftsführer das Ganze telefonisch oder vor Ort zeigt.
 
-> "Statt jetzt weiterzusprechen, schlage ich vor, dass Ihnen unser Geschäftsführer [Name] das Ganze einfach einmal telefonisch oder vor Ort zeigt."
+> "Statt das jetzt theoretisch zu halten, zeige ich Ihnen lieber in 20 Minuten einen echten Review-Flow mit anonymisierten Gesprächsdaten."
 
 ---
 
@@ -241,4 +241,39 @@ export const PLACEHOLDER_PERSONAS = [
     languages: [{ flag: "🇩🇪", name: "Deutsch", level: "Muttersprache" }],
     locked: true,
   },
+];
+
+export const SIGNAL_OVERVIEW = {
+  trackedCalls: 8484,
+  activeMotions: 2,
+  avgCallSeconds: 78,
+  callbackIntentRate: 58,
+  positiveRate: 3,
+  negativeRate: 18,
+};
+
+export const OUTCOME_MIX = [
+  { label: "Callback intent", value: 4880, share: 58, tone: "text-accent", bar: "bg-accent" },
+  { label: "Negative", value: 1529, share: 18, tone: "text-error", bar: "bg-error" },
+  { label: "Unknown / no tag", value: 1483, share: 17, tone: "text-warning", bar: "bg-warning" },
+  { label: "Positive", value: 244, share: 3, tone: "text-success", bar: "bg-success" },
+  { label: "No answer", value: 202, share: 2, tone: "text-muted", bar: "bg-white/30" },
+  { label: "Mailbox / busy", value: 130, share: 2, tone: "text-muted", bar: "bg-white/20" },
+];
+
+export const VOLUME_TREND = [
+  { date: "21 Apr", count: 70 },
+  { date: "28 Apr", count: 136 },
+  { date: "29 Apr", count: 28 },
+  { date: "30 Apr", count: 21 },
+  { date: "05 May", count: 218 },
+  { date: "06 May", count: 100 },
+  { date: "12 May", count: 146 },
+  { date: "13 May", count: 13 },
+];
+
+export const SIGNAL_FEED = [
+  { lane: "Motion Alpha", note: "Callback intent peaks after direct pain framing", metric: "+58% callback intent" },
+  { lane: "Motion Beta", note: "Positive outcomes happen on longer, multi-step discovery calls", metric: "448s avg positive call" },
+  { lane: "Ops Review", note: "Tag coverage still leaks volume into unknown outcomes", metric: "17% missing outcome tag" },
 ];

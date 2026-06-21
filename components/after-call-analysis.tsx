@@ -19,160 +19,154 @@ const MOCK_CRITERIA = [
   {
     id: "k01",
     order: 1,
-    text: "Begrüßung mit vollständigem Namen",
+    text: "Präziser Einstieg mit Name und Firma",
     status: "fulfilled" as const,
     score: 0.94,
-    evidence: "Guten Morgen Herr Maier, mein Name ist Max Mustermann von der Firma TechSolutions.",
+    evidence: "Guten Tag Frau Hartmann, mein Name ist Max Winter von MEGA.TALK.",
   },
   {
     id: "k02",
     order: 2,
-    text: "Empfang um Hilfe bitten",
+    text: "Zuständigkeit für Revenue Ops verifizieren",
     status: "fulfilled" as const,
     score: 0.88,
-    evidence: "Herr Maier, Sie müssen mir bitte einmal helfen.",
+    evidence: "Bin ich bei Ihnen richtig, wenn es um Gesprächsqualität, Coaching und Pipeline-Disziplin geht?",
   },
   {
     id: "k03",
     order: 3,
-    text: "Nach Ansprechpartner für Bestückung fragen",
+    text: "Operativen Schmerz statt Tool nennen",
     status: "fulfilled" as const,
     score: 0.91,
-    evidence: "Wer ist bei Ihnen der richtige Ansprechpartner für Leiterplattenbestückung und Prototypen?",
+    evidence: "Viele Teams sehen Aktivität, aber nicht, welche Gespräche wirklich Meetings erzeugen.",
   },
   {
     id: "k04",
     order: 4,
-    text: "Durchwahl erfragen",
+    text: "Messbaren Hebel nennen",
     status: "fulfilled" as const,
     score: 0.82,
-    evidence: "Welche Durchwahl hat er denn?",
+    evidence: "Führung sieht innerhalb von Tagen, welche Talk-Tracks Wiedervorlagen und echte nächste Schritte treiben.",
   },
   {
     id: "k05",
     order: 5,
-    text: "Bitte um Verbindung",
+    text: "Ablauf in klaren Schritten beschreiben",
     status: "fulfilled" as const,
     score: 0.95,
-    evidence: "Sind Sie so gut und verbinden Sie mich?",
+    evidence: "Wir verbinden Calls, legen euren Leitfaden als Raster an und machen dann Coaching-Lücken pro Motion sichtbar.",
   },
   {
     id: "k06",
     order: 6,
-    text: "Grund erklären bei Nachfrage",
+    text: "Abgrenzung zu Standard-Dashboards",
     status: "not_fulfilled" as const,
     score: 0.32,
-    evidence: "(Nicht klar adressiert — Empfang fragte nach, wechselte direkt zum Entscheider)",
+    evidence: "Auf die Frage nach bestehender Conversation-Intelligence kam keine scharfe Differenzierung.",
   },
   {
     id: "k07",
     order: 7,
-    text: "Gespräch mit Entscheider bestätigen",
+    text: "Führungsvorteil benennen",
     status: "fulfilled" as const,
     score: 0.87,
-    evidence: "Schön dass ich Sie erreiche, Herr Maier. Mein Name ist Max Mustermann.",
+    evidence: "Dann besprechen Führung und RevOps nicht mehr aus dem Bauch heraus, sondern mit sichtbaren Gesprächssignalen.",
   },
   {
     id: "k08",
     order: 8,
-    text: "Prüfen ob Thema richtig ist",
+    text: "Zeit bis Value beantworten",
     status: "fulfilled" as const,
     score: 0.79,
-    evidence: "Bin ich bei Ihnen richtig wenn es um Bestückung und kleine Serien geht?",
+    evidence: "Erste verwertbare Muster sehen Teams typischerweise schon in der ersten Woche.",
   },
   {
     id: "k09",
     order: 9,
-    text: "Direkt zum Punkt kommen",
+    text: "Alltagsnutzer klar verorten",
     status: "fulfilled" as const,
     score: 0.85,
-    evidence: "Wir unterstützen Unternehmen bei Prototypen und kleinen Serien.",
+    evidence: "Sales Leads coachen damit, Ops hält das Review-Raster sauber und Management sieht die Auswirkung auf die Pipeline.",
   },
   {
     id: "k10",
     order: 10,
-    text: "Zeitlichen Vorteil nennen",
+    text: "Konkreten Discovery-Schritt vorschlagen",
     status: "partial" as const,
     score: 0.58,
-    evidence: "Baugruppen in wenigen Tagen erwähnt, aber nicht \"statt Wochen\" konkretisiert.",
+    evidence: "Der nächste Schritt wurde angeboten, aber Dauer und Agenda des Reviews hätten schärfer sein können.",
   },
   {
     id: "k11",
     order: 11,
-    text: "Ablauf beschreiben",
+    text: "Zeitpräferenz vor Slot erfragen",
     status: "fulfilled" as const,
     score: 0.76,
-    evidence: "Wir klären gemeinsam Datenlage und besprechen offene Entscheidungen.",
+    evidence: "Passt Ihnen für so einen Review eher Anfang der Woche oder Ende der Woche?",
   },
   {
     id: "k12",
     order: 12,
-    text: "Kundennutzen benennen",
+    text: "Konkreten Termin setzen",
     status: "fulfilled" as const,
     score: 0.83,
-    evidence: "Sie sparen Zeit im Projekt und haben Sicherheit für die nächsten Schritte.",
+    evidence: "Dann lassen Sie uns Mittwoch um 10 Uhr einen anonymisierten Review-Flow durchgehen.",
   },
   {
     id: "k13",
     order: 13,
-    text: "Nächsten Schritt vorschlagen",
+    text: "Follow-up Kanal sichern",
     status: "fulfilled" as const,
     score: 0.72,
-    evidence: "Unser Geschäftsführer zeigt Ihnen das gerne telefonisch oder vor Ort.",
+    evidence: "Ich schicke Ihnen direkt im Anschluss die Agenda und das Sample-Dashboard per Mail.",
   },
   {
     id: "k14",
     order: 14,
-    text: "Zeitpräferenz erfragen",
+    text: "ROI-Rückfrage souverän aufnehmen",
     status: "not_fulfilled" as const,
     score: 0.21,
-    evidence: "Wurde direkt ein Termin genannt ohne vorher die Präferenz zu erfragen.",
+    evidence: "Die Rückfrage, wie schnell Coaching-Effekte messbar werden, wurde nur teilweise mit Zahlen hinterlegt.",
   },
   {
     id: "k15",
     order: 15,
-    text: "Konkreten Termin vorschlagen",
+    text: "Wettbewerbsfrage neutral halten",
     status: "fulfilled" as const,
     score: 0.90,
-    evidence: "Wie wäre es nächste Woche Donnerstag um 10 Uhr?",
+    evidence: "Der Vergleich zu bestehenden QA-Tools blieb respektvoll und wurde auf Signalqualität statt Feature-Listen gelenkt.",
   },
   {
     id: "k16",
     order: 16,
-    text: "E-Mail für Terminbestätigung",
+    text: "Nächsten administrativen Schritt abschließen",
     status: "fulfilled" as const,
     score: 0.93,
-    evidence: "Dann bräuchte ich bitte Ihre Mailadresse für die Terminbestätigung.",
+    evidence: "Perfekt, dann notiere ich Ihre Mailadresse für die Einladung und das anonymisierte Sample.",
   },
 ];
 
 const MOCK_TRANSCRIPT = [
-  { speaker: "Mitarbeiter", text: "Guten Morgen Herr Maier, mein Name ist Max Mustermann von der Firma TechSolutions." },
-  { speaker: "Thomas Maier", text: "Maier, Guten Morgen. Was kann ich für Sie tun?" },
-  { speaker: "Mitarbeiter", text: "Herr Maier, Sie müssen mir bitte einmal helfen. Wer ist bei Ihnen der richtige Ansprechpartner für Leiterplattenbestückung und Prototypen?" },
-  { speaker: "Thomas Maier", text: "Also Prototypen und Kleinserien — das bin ich selbst, da bin ich noch in der Entwicklung dabei." },
-  { speaker: "Mitarbeiter", text: "Welche Durchwahl haben Sie denn?" },
-  { speaker: "Thomas Maier", text: "Durchwahl 42. Sind Sie so gut und verbinden Sie mich? Äh, warten Sie, Sie sind ja schon bei mir dran." },
-  { speaker: "Mitarbeiter", text: "Schön dass ich Sie erreiche. Bin ich bei Ihnen richtig wenn es um Bestückung und kleine Serien geht?" },
-  { speaker: "Thomas Maier", text: "Ja, da sind Sie richtig. Prototypen und Kleinserien, das ist unser tägliches Geschäft." },
-  { speaker: "Mitarbeiter", text: "Wir unterstützen Unternehmen bei Prototypen und kleinen Serien. Baugruppen in wenigen Tagen — das ist unser Versprechen." },
-  { speaker: "Thomas Maier", text: "In wenigen Tagen? Das klingt interessant. Wir warten manchmal wochenlang auf Muster." },
-  { speaker: "Mitarbeiter", text: "Genau darum geht es. Wir klären gemeinsam die Datenlage und was realistisch umsetzbar ist. Sie sparen Zeit im Projekt und haben Sicherheit." },
-  { speaker: "Thomas Maier", text: "Klingt gut. Aber was kostet mich der Spaß? Wir sind kein Großkonzern." },
-  { speaker: "Mitarbeiter", text: "Das besprechen wir im Detail. Unser Geschäftsführer zeigt Ihnen das gerne telefonisch oder vor Ort." },
-  { speaker: "Thomas Maier", text: "Na gut, reden wir mal. Schaden kann's ja nicht." },
-  { speaker: "Mitarbeiter", text: "Passt es Ihnen grundsätzlich besser vormittags oder nachmittags?" },
-  { speaker: "Thomas Maier", text: "Eher vormittags, so zwischen 9 und 11." },
-  { speaker: "Mitarbeiter", text: "Wie wäre es nächste Woche Donnerstag um 10 Uhr?" },
-  { speaker: "Thomas Maier", text: "Passt. Tragen Sie's ein." },
-  { speaker: "Mitarbeiter", text: "Dann bräuchte ich bitte Ihre Mailadresse für die Terminbestätigung." },
-  { speaker: "Thomas Maier", text: "maier@leiterplatten.de. Freu mich auf das Gespräch." },
+  { speaker: "Mitarbeiter", text: "Guten Tag Frau Hartmann, mein Name ist Max Winter von MEGA.TALK." },
+  { speaker: "Leonie Hartmann", text: "Hartmann, guten Tag. Worum geht es konkret?" },
+  { speaker: "Mitarbeiter", text: "Ich melde mich, weil viele Teams zwar Aktivität sehen, aber nicht, welche Gespräche wirklich Meetings und Wiedervorlagen erzeugen." },
+  { speaker: "Leonie Hartmann", text: "Dashboards haben wir genug. Was sehen wir bei Ihnen anders?" },
+  { speaker: "Mitarbeiter", text: "Sie sehen nicht nur Transkripte, sondern welche Talk-Tracks, Einwände und Leitfaden-Schritte tatsächlich Pipeline-Momentum auslösen." },
+  { speaker: "Leonie Hartmann", text: "Und wer nutzt das dann im Alltag?" },
+  { speaker: "Mitarbeiter", text: "Sales Leads coachen damit, Ops hält die Review-Logik sauber, und Führung bekommt belegbare Signal-Muster statt Bauchgefühl." },
+  { speaker: "Leonie Hartmann", text: "Wie schnell ist so etwas verwertbar?" },
+  { speaker: "Mitarbeiter", text: "Erste Muster sehen Teams oft in der ersten Woche, weil wir Calls anbinden, den Leitfaden als Raster anlegen und Outcomes sauber clustern." },
+  { speaker: "Leonie Hartmann", text: "Okay, das ist zumindest konkreter als das meiste, was ich höre." },
+  { speaker: "Mitarbeiter", text: "Dann würde ich Ihnen gern in 20 Minuten einen anonymisierten Review-Flow zeigen — mit echten Coaching-Lücken und Signalverteilungen." },
+  { speaker: "Leonie Hartmann", text: "Anfang der Woche wäre besser als Ende der Woche." },
+  { speaker: "Mitarbeiter", text: "Dann lassen Sie uns Mittwoch um 10 Uhr gehen. Ich schicke Ihnen direkt danach Agenda und Sample-Dashboard." },
+  { speaker: "Leonie Hartmann", text: "Passt. Schicken Sie es an l.hartmann@nordstern-industrie.de." },
 ];
 
 const OVERALL_SCORE = 78;
 const DURATION = "4:23";
 const DATE = "20. Juni 2026 · 14:30 Uhr";
-const EMPLOYEE = "Max Mustermann";
+const EMPLOYEE = "Rep-01";
 
 function getStatusIcon(status: string) {
   switch (status) {
@@ -243,7 +237,7 @@ export function AfterCallAnalysis({ onBack }: { onBack?: () => void }) {
 
       {/* Header Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-card rounded-xl border border-border p-5 shadow-sm">
+        <div className="mega-panel mega-hover-lift rounded-2xl p-5">
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs text-muted uppercase tracking-wider font-medium">
               Script Adherence Score
@@ -255,7 +249,7 @@ export function AfterCallAnalysis({ onBack }: { onBack?: () => void }) {
           </p>
         </div>
 
-        <div className="bg-card rounded-xl border border-border p-5 shadow-sm">
+        <div className="mega-panel mega-hover-lift rounded-2xl p-5">
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs text-muted uppercase tracking-wider font-medium">
               Kriterien
@@ -272,7 +266,7 @@ export function AfterCallAnalysis({ onBack }: { onBack?: () => void }) {
           </div>
         </div>
 
-        <div className="bg-card rounded-xl border border-border p-5 shadow-sm">
+        <div className="mega-panel mega-hover-lift rounded-2xl p-5">
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs text-muted uppercase tracking-wider font-medium">
               Dauer
@@ -285,7 +279,7 @@ export function AfterCallAnalysis({ onBack }: { onBack?: () => void }) {
           <p className="text-xs text-muted mt-1">{DATE}</p>
         </div>
 
-        <div className="bg-card rounded-xl border border-border p-5 shadow-sm">
+        <div className="mega-panel mega-hover-lift rounded-2xl p-5">
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs text-muted uppercase tracking-wider font-medium">
               Pipeline
@@ -298,7 +292,7 @@ export function AfterCallAnalysis({ onBack }: { onBack?: () => void }) {
       </div>
 
       {/* Pipeline Steps */}
-      <div className="bg-card rounded-xl border border-border p-5 shadow-sm">
+      <div className="mega-panel rounded-2xl p-5 mega-shimmer">
         <h3 className="text-sm font-semibold text-foreground mb-4 flex items-center gap-2">
           <TrendingUp className="w-4 h-4 text-accent" />
           Pipeline-Durchlauf
@@ -331,7 +325,7 @@ export function AfterCallAnalysis({ onBack }: { onBack?: () => void }) {
       </div>
 
       {/* Criteria breakdown */}
-      <div className="bg-card rounded-xl border border-border shadow-sm">
+      <div className="mega-panel rounded-2xl overflow-hidden">
         <div className="px-5 py-4 border-b border-border flex items-center justify-between">
           <h3 className="text-sm font-semibold text-foreground">
             Leitfaden-Kriterien
@@ -350,7 +344,7 @@ export function AfterCallAnalysis({ onBack }: { onBack?: () => void }) {
                     expandedCriterion === criterion.id ? null : criterion.id
                   )
                 }
-                className="w-full flex items-center justify-between px-5 py-3 text-left hover:bg-accent/5 transition-colors"
+                className="w-full flex items-center justify-between px-5 py-3 text-left hover:bg-accent/5 transition-colors mega-hover-lift"
               >
                 <div className="flex items-center gap-3 min-w-0">
                   <div className="flex-shrink-0 w-6 h-6 rounded-full bg-accent/10 text-accent text-xs font-semibold flex items-center justify-center">
@@ -399,7 +393,7 @@ export function AfterCallAnalysis({ onBack }: { onBack?: () => void }) {
       </div>
 
       {/* Transcript */}
-      <div className="bg-card rounded-xl border border-border shadow-sm">
+      <div className="mega-panel rounded-2xl overflow-hidden">
         <button
           onClick={() => setShowTranscript(!showTranscript)}
           className="w-full px-5 py-4 flex items-center justify-between text-left"
@@ -421,7 +415,7 @@ export function AfterCallAnalysis({ onBack }: { onBack?: () => void }) {
               <div
                 key={i}
                 className={`flex items-start gap-3 ${
-                  entry.speaker === "Thomas Maier" ? "opacity-70" : ""
+                  entry.speaker !== "Mitarbeiter" ? "opacity-70" : ""
                 }`}
               >
                 <div
@@ -443,7 +437,7 @@ export function AfterCallAnalysis({ onBack }: { onBack?: () => void }) {
       </div>
 
       {/* Coaching Note */}
-      <div className="bg-accent/5 border border-accent/20 rounded-xl p-5">
+      <div className="mega-panel rounded-2xl p-5 animate-float-soft">
         <h3 className="text-sm font-semibold text-foreground mb-2">
           Coaching-Hinweise
         </h3>
