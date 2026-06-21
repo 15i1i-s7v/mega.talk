@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useCallState } from "@/lib/call-state-context";
 import {
   BarChart3,
   CheckCircle2,
@@ -15,158 +16,102 @@ import {
   ChevronUp,
 } from "lucide-react";
 
-const MOCK_CRITERIA = [
-  {
-    id: "k01",
-    order: 1,
-    text: "Open with clear name and company",
-    status: "fulfilled" as const,
-    score: 0.94,
-    evidence: "Good afternoon Ms. Hartmann, this is Max Winter from MEGA.TALK.",
-  },
-  {
-    id: "k02",
-    order: 2,
-    text: "Verify ownership of revenue operations",
-    status: "fulfilled" as const,
-    score: 0.88,
-    evidence: "Am I right that you own conversation quality, coaching, and pipeline discipline?",
-  },
-  {
-    id: "k03",
-    order: 3,
-    text: "Lead with operating pain, not the tool",
-    status: "fulfilled" as const,
-    score: 0.91,
-    evidence: "Many teams can see activity, but they still cannot see which conversations actually create meetings.",
-  },
-  {
-    id: "k04",
-    order: 4,
-    text: "Name a measurable upside",
-    status: "fulfilled" as const,
-    score: 0.82,
-    evidence: "Leadership can see within days which talk tracks create callbacks and real next steps.",
-  },
-  {
-    id: "k05",
-    order: 5,
-    text: "Explain the workflow in clear steps",
-    status: "fulfilled" as const,
-    score: 0.95,
-    evidence: "We connect calls, map the guide as a review grid, and then expose coaching gaps by motion.",
-  },
-  {
-    id: "k06",
-    order: 6,
-    text: "Differentiate from standard dashboards",
-    status: "not_fulfilled" as const,
-    score: 0.32,
-    evidence: "The answer to the conversation-intelligence comparison was still not sharp enough.",
-  },
-  {
-    id: "k07",
-    order: 7,
-    text: "State the leadership value",
-    status: "fulfilled" as const,
-    score: 0.87,
-    evidence: "That way leadership and RevOps stop reviewing on gut feel and start reviewing on visible conversation signals.",
-  },
-  {
-    id: "k08",
-    order: 8,
-    text: "Answer time-to-value clearly",
-    status: "fulfilled" as const,
-    score: 0.79,
-    evidence: "Teams typically see the first usable patterns in the first week.",
-  },
-  {
-    id: "k09",
-    order: 9,
-    text: "Name the daily users clearly",
-    status: "fulfilled" as const,
-    score: 0.85,
-    evidence: "Sales leads coach with it, ops keeps the review grid clean, and management sees the pipeline impact.",
-  },
-  {
-    id: "k10",
-    order: 10,
-    text: "Offer a concrete discovery step",
-    status: "partial" as const,
-    score: 0.58,
-    evidence: "The next step was offered, but the duration and review agenda could have been sharper.",
-  },
-  {
-    id: "k11",
-    order: 11,
-    text: "Ask for time preference before the slot",
-    status: "fulfilled" as const,
-    score: 0.76,
-    evidence: "Would early next week work better for that review, or later in the week?",
-  },
-  {
-    id: "k12",
-    order: 12,
-    text: "Lock a concrete calendar slot",
-    status: "fulfilled" as const,
-    score: 0.83,
-    evidence: "Then let us walk through an anonymized review flow on Wednesday at 10.",
-  },
-  {
-    id: "k13",
-    order: 13,
-    text: "Secure the follow-up channel",
-    status: "fulfilled" as const,
-    score: 0.72,
-    evidence: "I will send the agenda and sample dashboard right after the call.",
-  },
-  {
-    id: "k14",
-    order: 14,
-    text: "Handle ROI pushback cleanly",
-    status: "not_fulfilled" as const,
-    score: 0.21,
-    evidence: "The question about how quickly coaching impact becomes measurable was only partly backed with numbers.",
-  },
-  {
-    id: "k15",
-    order: 15,
-    text: "Handle competitor comparison calmly",
-    status: "fulfilled" as const,
-    score: 0.90,
-    evidence: "The comparison to existing QA tools stayed respectful and focused on signal quality instead of feature lists.",
-  },
-  {
-    id: "k16",
-    order: 16,
-    text: "Close the admin next step",
-    status: "fulfilled" as const,
-    score: 0.93,
-    evidence: "Perfect, I will note your email for the invite and the anonymized sample dashboard.",
-  },
+export interface CriterionResult {
+  id: string;
+  order: number;
+  text: string;
+  status: "fulfilled" | "partial" | "not_fulfilled";
+  score: number;
+  evidence: string | null;
+}
+
+const PLAYBOOK_CRITERIA: Omit<CriterionResult, "status" | "score" | "evidence">[] = [
+  { id: "k01", order: 1, text: "Open with clear name and company" },
+  { id: "k02", order: 2, text: "Verify ownership of revenue operations" },
+  { id: "k03", order: 3, text: "Lead with operating pain, not the tool" },
+  { id: "k04", order: 4, text: "Name a measurable upside" },
+  { id: "k05", order: 5, text: "Explain the workflow in clear steps" },
+  { id: "k06", order: 6, text: "Differentiate from standard dashboards" },
+  { id: "k07", order: 7, text: "State the leadership value" },
+  { id: "k08", order: 8, text: "Answer time-to-value clearly" },
+  { id: "k09", order: 9, text: "Name the daily users clearly" },
+  { id: "k10", order: 10, text: "Offer a concrete discovery step" },
+  { id: "k11", order: 11, text: "Ask for time preference before the slot" },
+  { id: "k12", order: 12, text: "Lock a concrete calendar slot" },
+  { id: "k13", order: 13, text: "Secure the follow-up channel" },
+  { id: "k14", order: 14, text: "Handle ROI pushback cleanly" },
+  { id: "k15", order: 15, text: "Handle competitor comparison calmly" },
+  { id: "k16", order: 16, text: "Close the admin next step" },
 ];
 
-const MOCK_TRANSCRIPT = [
-  { speaker: "Rep", text: "Good afternoon Ms. Hartmann, this is Max Winter from MEGA.TALK." },
-  { speaker: "Leonie Hartmann", text: "Hartmann speaking. What exactly is this about?" },
-  { speaker: "Rep", text: "Most sales teams can see activity, but they still cannot see which conversations actually create meetings and callbacks." },
-  { speaker: "Leonie Hartmann", text: "We already have dashboards. What would be different here?" },
-  { speaker: "Rep", text: "You would not just see transcripts. You would see which talk tracks, objections, and guide moments actually create pipeline momentum." },
-  { speaker: "Leonie Hartmann", text: "Who uses it every day?" },
-  { speaker: "Rep", text: "Sales leads use it to coach, operations keeps the review logic clean, and leadership gets proof instead of gut feel." },
-  { speaker: "Leonie Hartmann", text: "How quickly would that become useful?" },
-  { speaker: "Rep", text: "Teams usually see the first usable patterns in the first week because we connect calls, map the guide, and cluster outcomes fast." },
-  { speaker: "Leonie Hartmann", text: "That is more concrete than most of what I hear." },
-  { speaker: "Rep", text: "Then let me show you a 20-minute anonymized review flow with real coaching gaps and signal distribution." },
-  { speaker: "Leonie Hartmann", text: "Early next week works better than later in the week." },
-  { speaker: "Rep", text: "Great. Let us lock Wednesday at 10. I will send the agenda and sample dashboard right after this." },
-  { speaker: "Leonie Hartmann", text: "That works. Send it to l.hartmann@nordstern-industrie.de." },
+const KEYWORD_RULES: { criterionId: string; patterns: string[]; weight: number }[] = [
+  { criterionId: "k01", patterns: ["this is", "from mega.talk", "from megathon", "mega talk"], weight: 1.0 },
+  { criterionId: "k02", patterns: ["you own", "conversation quality", "pipeline discipline", "revenue operations", "revops"], weight: 1.0 },
+  { criterionId: "k03", patterns: ["conversations create meetings", "pipeline momentum", "signal", "quality", "coaching proof"], weight: 0.9 },
+  { criterionId: "k04", patterns: ["conversion", "callback", "time-to-value", "week", "measurable", "lift", "percent", "%"], weight: 0.8 },
+  { criterionId: "k05", patterns: ["connect calls", "review grid", "three steps", "workflow", "first", "then", "finally"], weight: 0.9 },
+  { criterionId: "k06", patterns: ["not just dashboards", "different from", "signal quality", "not another", "compared to"], weight: 0.8 },
+  { criterionId: "k07", patterns: ["leadership", "gut feel", "proof", "decision", "ops", "management"], weight: 0.9 },
+  { criterionId: "k08", patterns: ["first week", "within days", "quickly", "fast", "first usable"], weight: 0.8 },
+  { criterionId: "k09", patterns: ["sales lead", "operations", "management", "ops keeps", "coaches"], weight: 0.8 },
+  { criterionId: "k10", patterns: ["20-minute", "review flow", "discovery", "show you", "walk through", "demo"], weight: 0.9 },
+  { criterionId: "k11", patterns: ["time preference", "early next week", "later in the week", "works better"], weight: 0.9 },
+  { criterionId: "k12", patterns: ["wednesday", "lock", "slot", "calendar", "10 am", "10:00", "next tuesday", "next thursday"], weight: 0.9 },
+  { criterionId: "k13", patterns: ["send", "email", "agenda", "dashboard", "follow-up", "right after"], weight: 0.9 },
+  { criterionId: "k14", patterns: ["roi", "impact", "coaching impact", "measurable impact", "numbers"], weight: 0.8 },
+  { criterionId: "k15", patterns: ["qa tools", "conversation intelligence", "different", "focused on"], weight: 0.8 },
+  { criterionId: "k16", patterns: ["note your email", "invite", "calendar invite", "sample dashboard"], weight: 0.9 },
 ];
 
-const OVERALL_SCORE = 78;
-const DURATION = "4:23";
-const DATE = "June 20, 2026 · 2:30 PM";
-const EMPLOYEE = "Rep-01";
+export function scoreCall(transcript: { role: string; text: string }[]): CriterionResult[] {
+  const userText = transcript
+    .filter((entry) => entry.role === "user")
+    .map((entry) => entry.text)
+    .join(" ")
+    .toLowerCase();
+
+  const sentences = transcript
+    .filter((entry) => entry.role === "user")
+    .flatMap((entry) => entry.text.split(/[.!?]+/).map((s) => s.trim().toLowerCase()).filter(Boolean));
+
+  return PLAYBOOK_CRITERIA.map((criterion) => {
+    const rules = KEYWORD_RULES.filter((rule) => rule.criterionId === criterion.id);
+    let bestScore = 0;
+    let bestEvidence: string | null = null;
+
+    for (const rule of rules) {
+      for (const pattern of rule.patterns) {
+        if (userText.includes(pattern.toLowerCase())) {
+          const score = rule.weight;
+          if (score > bestScore) {
+            bestScore = score;
+            // Find a short sentence containing the matched pattern for evidence.
+            bestEvidence =
+              sentences.find((sentence) => sentence.includes(pattern.toLowerCase())) ||
+              `Mentioned: "${pattern}"`;
+          }
+        }
+      }
+    }
+
+    let status: CriterionResult["status"];
+    if (bestScore >= 0.8) {
+      status = "fulfilled";
+    } else if (bestScore >= 0.4) {
+      status = "partial";
+    } else {
+      status = "not_fulfilled";
+      bestEvidence = "Not detected in the conversation";
+    }
+
+    return {
+      ...criterion,
+      status,
+      score: bestScore,
+      evidence: bestEvidence,
+    };
+  });
+}
 
 function getStatusIcon(status: string) {
   switch (status) {
@@ -207,24 +152,33 @@ function getStatusColor(status: string) {
   }
 }
 
+function formatDuration(seconds: number) {
+  const m = Math.floor(seconds / 60);
+  const s = seconds % 60;
+  return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+}
+
 export function AfterCallAnalysis({ onBack }: { onBack?: () => void }) {
   const [expandedCriterion, setExpandedCriterion] = useState<string | null>(null);
   const [showTranscript, setShowTranscript] = useState(false);
+  const { transcript, callDuration } = useCallState();
 
-  const fulfilled = MOCK_CRITERIA.filter((c) => c.status === "fulfilled").length;
-  const partial = MOCK_CRITERIA.filter((c) => c.status === "partial").length;
-  const notFulfilled = MOCK_CRITERIA.filter((c) => c.status === "not_fulfilled").length;
+  const criteria = scoreCall(transcript);
+  const fulfilled = criteria.filter((c) => c.status === "fulfilled").length;
+  const partial = criteria.filter((c) => c.status === "partial").length;
+  const notFulfilled = criteria.filter((c) => c.status === "not_fulfilled").length;
+  const overallScore = criteria.length > 0
+    ? Math.round(criteria.reduce((sum, c) => sum + c.score, 0) / criteria.length * 100)
+    : 0;
 
   const scoreColor =
-    OVERALL_SCORE >= 80
-      ? "text-success"
-      : OVERALL_SCORE >= 60
-        ? "text-warning"
-        : "text-error";
+    overallScore >= 80 ? "text-success" : overallScore >= 60 ? "text-warning" : "text-error";
+
+  const userEntries = transcript.filter((entry) => entry.role === "user");
+  const assistantEntries = transcript.filter((entry) => entry.role === "assistant");
 
   return (
     <div className="space-y-6">
-      {/* Back */}
       {onBack && (
         <button
           onClick={onBack}
@@ -235,7 +189,6 @@ export function AfterCallAnalysis({ onBack }: { onBack?: () => void }) {
         </button>
       )}
 
-      {/* Header Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="mega-panel mega-hover-lift rounded-2xl p-5">
           <div className="flex items-center justify-between mb-2">
@@ -245,7 +198,7 @@ export function AfterCallAnalysis({ onBack }: { onBack?: () => void }) {
             <Target className="w-4 h-4 text-accent" />
           </div>
           <p className={`text-3xl font-display font-semibold ${scoreColor}`}>
-            {OVERALL_SCORE}%
+            {overallScore}%
           </p>
         </div>
 
@@ -257,7 +210,7 @@ export function AfterCallAnalysis({ onBack }: { onBack?: () => void }) {
             <FileText className="w-4 h-4 text-accent" />
           </div>
           <p className="text-3xl font-display font-semibold text-foreground">
-            {fulfilled + partial}/{MOCK_CRITERIA.length}
+            {fulfilled + partial}/{criteria.length}
           </p>
           <div className="mt-2 flex gap-2 text-xs">
             <span className="text-success">{fulfilled} met</span>
@@ -274,9 +227,15 @@ export function AfterCallAnalysis({ onBack }: { onBack?: () => void }) {
             <Clock className="w-4 h-4 text-accent" />
           </div>
           <p className="text-3xl font-display font-semibold text-foreground">
-            {DURATION}
+            {formatDuration(callDuration)}
           </p>
-          <p className="text-xs text-muted mt-1">{DATE}</p>
+          <p className="text-xs text-muted mt-1">
+            {new Date().toLocaleDateString("en-US", {
+              month: "long",
+              day: "numeric",
+              year: "numeric",
+            })}
+          </p>
         </div>
 
         <div className="mega-panel mega-hover-lift rounded-2xl p-5">
@@ -286,12 +245,11 @@ export function AfterCallAnalysis({ onBack }: { onBack?: () => void }) {
             </span>
             <BarChart3 className="w-4 h-4 text-accent" />
           </div>
-          <p className="text-sm font-semibold text-foreground">{EMPLOYEE}</p>
-          <p className="text-xs text-muted mt-1">AssemblyAI → HF NLI</p>
+          <p className="text-sm font-semibold text-foreground">Live transcript</p>
+          <p className="text-xs text-muted mt-1">Keyword match → score</p>
         </div>
       </div>
 
-      {/* Pipeline Steps */}
       <div className="mega-panel rounded-2xl p-5 mega-shimmer">
         <h3 className="text-sm font-semibold text-foreground mb-4 flex items-center gap-2">
           <TrendingUp className="w-4 h-4 text-accent" />
@@ -300,10 +258,9 @@ export function AfterCallAnalysis({ onBack }: { onBack?: () => void }) {
         <div className="flex items-center gap-2 text-xs">
           {[
             { label: "Audio", done: true },
-            { label: "AssemblyAI", done: true },
-            { label: "Transcript", done: true },
-            { label: "HF NLI", done: true },
-            { label: "Score", done: true },
+            { label: "Transcript", done: userEntries.length > 0 },
+            { label: "User only", done: userEntries.length > 0 },
+            { label: "Score", done: criteria.length > 0 },
           ].map((step, i) => (
             <div key={i} className="flex items-center gap-2 flex-1">
               <div
@@ -316,27 +273,24 @@ export function AfterCallAnalysis({ onBack }: { onBack?: () => void }) {
                 <CheckCircle2 className="w-3 h-3" />
                 <span className="font-medium">{step.label}</span>
               </div>
-              {i < 4 && (
-                <div className="flex-1 h-px bg-border" />
-              )}
+              {i < 3 && <div className="flex-1 h-px bg-border" />}
             </div>
           ))}
         </div>
       </div>
 
-      {/* Criteria breakdown */}
       <div className="mega-panel rounded-2xl overflow-hidden">
         <div className="px-5 py-4 border-b border-border flex items-center justify-between">
           <h3 className="text-sm font-semibold text-foreground">
             Guide criteria
           </h3>
           <span className="text-xs text-muted">
-            {fulfilled + partial}/{MOCK_CRITERIA.length} passed
+            {fulfilled + partial}/{criteria.length} passed
           </span>
         </div>
 
         <div className="divide-y divide-border">
-          {MOCK_CRITERIA.map((criterion) => (
+          {criteria.map((criterion) => (
             <div key={criterion.id}>
               <button
                 onClick={() =>
@@ -356,7 +310,9 @@ export function AfterCallAnalysis({ onBack }: { onBack?: () => void }) {
                 </div>
                 <div className="flex items-center gap-3 flex-shrink-0">
                   <span
-                    className={`text-xs font-medium px-2 py-0.5 rounded-full border ${getStatusColor(criterion.status)}`}
+                    className={`text-xs font-medium px-2 py-0.5 rounded-full border ${getStatusColor(
+                      criterion.status
+                    )}`}
                   >
                     {getStatusIcon(criterion.status)}
                     <span className="ml-1">{getStatusLabel(criterion.status)}</span>
@@ -373,7 +329,7 @@ export function AfterCallAnalysis({ onBack }: { onBack?: () => void }) {
                 <div className="px-5 pb-4 pt-0 bg-accent/5">
                   <div className="ml-9 space-y-2">
                     <div>
-                      <span className="text-xs text-muted">NLI score: </span>
+                      <span className="text-xs text-muted">Match score: </span>
                       <span className="text-xs font-mono font-medium text-foreground">
                         {(criterion.score * 100).toFixed(0)}%
                       </span>
@@ -381,7 +337,7 @@ export function AfterCallAnalysis({ onBack }: { onBack?: () => void }) {
                     <div className="bg-card rounded-lg border border-border p-3">
                       <p className="text-xs text-muted mb-1">Transcript evidence:</p>
                       <p className="text-sm text-foreground italic">
-                        &ldquo;{criterion.evidence}&rdquo;
+                        &ldquo;{criterion.evidence || "No evidence detected"}&rdquo;
                       </p>
                     </div>
                   </div>
@@ -392,7 +348,6 @@ export function AfterCallAnalysis({ onBack }: { onBack?: () => void }) {
         </div>
       </div>
 
-      {/* Transcript */}
       <div className="mega-panel rounded-2xl overflow-hidden">
         <button
           onClick={() => setShowTranscript(!showTranscript)}
@@ -400,7 +355,7 @@ export function AfterCallAnalysis({ onBack }: { onBack?: () => void }) {
         >
           <h3 className="text-sm font-semibold text-foreground flex items-center gap-2">
             <FileText className="w-4 h-4 text-accent" />
-            Transcript
+            Transcript ({transcript.length} messages)
           </h3>
           {showTranscript ? (
             <ChevronUp className="w-4 h-4 text-muted" />
@@ -411,21 +366,21 @@ export function AfterCallAnalysis({ onBack }: { onBack?: () => void }) {
 
         {showTranscript && (
           <div className="px-5 pb-5 space-y-3 max-h-96 overflow-y-auto scrollbar-thin">
-            {MOCK_TRANSCRIPT.map((entry, i) => (
+            {transcript.map((entry, i) => (
               <div
                 key={i}
-                  className={`flex items-start gap-3 ${
-                  entry.speaker !== "Rep" ? "opacity-70" : ""
+                className={`flex items-start gap-3 ${
+                  entry.role !== "user" ? "opacity-70" : ""
                 }`}
               >
                 <div
                   className={`flex-shrink-0 w-16 text-xs font-medium px-2 py-1 rounded ${
-                    entry.speaker === "Rep"
+                    entry.role === "user"
                       ? "bg-accent/10 text-accent"
                       : "bg-muted text-muted"
                   }`}
                 >
-                  {entry.speaker === "Rep" ? "Rep" : "Persona"}
+                  {entry.role === "user" ? "Rep" : "Persona"}
                 </div>
                 <p className="text-sm text-foreground leading-relaxed">
                   {entry.text}
@@ -436,30 +391,42 @@ export function AfterCallAnalysis({ onBack }: { onBack?: () => void }) {
         )}
       </div>
 
-      {/* Coaching Note */}
       <div className="mega-panel rounded-2xl p-5 animate-float-soft">
         <h3 className="text-sm font-semibold text-foreground mb-2">
           Coaching notes
         </h3>
         <ul className="space-y-2 text-sm text-foreground/80">
-          <li className="flex items-start gap-2">
-            <span className="text-warning flex-shrink-0">→</span>
-            <span>
-              <strong>Differentiate faster:</strong> Answer the dashboard objection with a sharper before-vs-after contrast.
-            </span>
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="text-warning flex-shrink-0">→</span>
-            <span>
-              <strong>Quantify impact:</strong> Put time-to-value and coaching proof into numbers earlier in the conversation.
-            </span>
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="text-warning flex-shrink-0">→</span>
-            <span>
-              <strong>Protect the close:</strong> Keep the two-step close — preference first, slot second — because it preserves control without pressure.
-            </span>
-          </li>
+          {notFulfilled > 0 ? (
+            <>
+              <li className="flex items-start gap-2">
+                <span className="text-warning flex-shrink-0">→</span>
+                <span>
+                  <strong>Close gaps:</strong> {notFulfilled} criteria were not detected in your conversation.
+                </span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-warning flex-shrink-0">→</span>
+                <span>
+                  <strong>Use the playbook:</strong> Reference the exact phrases in the guide to hit more criteria.
+                </span>
+              </li>
+            </>
+          ) : (
+            <>
+              <li className="flex items-start gap-2">
+                <span className="text-success flex-shrink-0">✓</span>
+                <span>
+                  <strong>Strong adherence:</strong> You covered most guide criteria.
+                </span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-success flex-shrink-0">✓</span>
+                <span>
+                  <strong>Next level:</strong> Add sharper numbers and ROI proof to push partial scores to met.
+                </span>
+              </li>
+            </>
+          )}
         </ul>
       </div>
     </div>

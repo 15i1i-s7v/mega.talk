@@ -20,26 +20,9 @@ export function CallControls({
   onShowAnalysis?: () => void;
 }) {
   const { setMuted, isConnected, error } = useVapi();
-  const { callState, startCall, endCall, resetCall } = useCallState();
+  const { callState, startCall, endCall, resetCall, callDuration } = useCallState();
   const [isMuted, setIsMuted] = useState(false);
-  const [callDuration, setCallDuration] = useState(0);
   const [isProcessing, setIsProcessing] = useState(false);
-
-  useEffect(() => {
-    let interval: ReturnType<typeof setInterval> | null = null;
-
-    if (callState === "active") {
-      interval = setInterval(() => {
-        setCallDuration((prev) => prev + 1);
-      }, 1000);
-    } else {
-      setCallDuration(0);
-    }
-
-    return () => {
-      if (interval) clearInterval(interval);
-    };
-  }, [callState]);
 
   useEffect(() => {
     if (isConnected && callState === "connecting") {
@@ -60,14 +43,13 @@ export function CallControls({
     endCall();
     setIsMuted(false);
     setIsProcessing(true);
-      toast.info("Analyzing call...");
+    toast.info("Analyzing call...");
 
-    // Simulate pipeline processing
     setTimeout(() => {
       setIsProcessing(false);
       toast.success("Analysis complete");
       if (onShowAnalysis) onShowAnalysis();
-    }, 2500);
+    }, 1500);
   };
 
   const handleTryAgain = () => resetCall();
@@ -155,7 +137,7 @@ export function CallControls({
                     Analyzing conversation
                   </p>
                   <p className="text-xs text-muted">
-                    AssemblyAI → HuggingFace NLI → Score
+                    Live transcript → Score
                   </p>
                 </div>
               </div>
@@ -188,3 +170,4 @@ export function CallControls({
     </div>
   );
 }
+

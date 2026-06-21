@@ -3,9 +3,21 @@
 import { useEffect, useRef, useState } from "react";
 import Vapi from "@vapi-ai/web";
 
+export interface TranscriptMessage {
+  role: "assistant" | "user";
+  text: string;
+  timestamp: number;
+}
+
 interface AssistantCredentials {
   assistantId: string;
   publicKey: string;
+}
+
+export interface ConversationSummary {
+  transcript: TranscriptMessage[];
+  durationSeconds: number;
+  callId?: string;
 }
 
 export function useVapi() {
@@ -21,7 +33,7 @@ export function useVapi() {
   }, []);
 
   return {
-    start: async () => {
+    start: async (onTranscript?: (messages: TranscriptMessage[]) => void) => {
       setError(null);
 
       let credentials: AssistantCredentials;
@@ -38,19 +50,15 @@ export function useVapi() {
         throw err;
       }
 
-      // Pre-warm microphone to avoid Krisp/WASM init failures.
-      let audioTrack: MediaStreamTrack | undefined;
-      try {
-        const warmupStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        [audioTrack] = warmupStream.getAudioTracks();
-      } catch (micErr) {
-        console.warn("Microphone warm-up failed, falling back to default:", micErr);
-      }
+      // Collect transcript messages during the call.
+      const transcript: TranscriptMessage[] = [];
+      const pushTranscript = (role: "assistant" | "user", text: string) => {
+        transcript.push({ role, text, timestamp: Date.now() });
+        onTranscript?.([...transcript]);
+      };
 
       try {
-        const vapi = audioTrack
-          ? new Vapi(credentials.publicKey, undefined, undefined, { audioSource: audioTrack })
-          : new Vapi(credentials.publicKey);
+        const vapi = new Vapi(credentials.publicKey);
         vapiRef.current = vapi;
 
         vapi.on("call-start", () => {
@@ -65,7 +73,21 @@ export function useVapi() {
         vapi.on("speech-end", () => setIsSpeaking(false));
         vapi.on("message", (message) => {
           if (message.type === "transcript") {
-            console.log("💬", message.transcript);
+            const text = message.transcript || "";
+            const role = message.role === "assistant" ? "assistant" : "user";
+            pushTranscript(role, text);
+          }
+          if (message.type === "conversation-update" && Array.isArray(message.conversation)) {
+            const normalized: TranscriptMessage[] = message.conversation
+              .filter((entry: any) => typeof entry?.role === "string" && typeof entry?.content === "string")
+              .map((entry: any) => ({
+                role: entry.role === "assistant" ? "assistant" : "user",
+                text: entry.content,
+                timestamp: Date.now(),
+              }));
+            transcript.length = 0;
+            transcript.push(...normalized);
+            onTranscript?.([...transcript]);
           }
         });
         vapi.on("error", (err) => {
@@ -87,6 +109,10 @@ export function useVapi() {
         setError(errorMessage);
         throw err;
       }
+
+      return {
+        getTranscript: () => [...transcript],
+      };
     },
     stop: () => {
       vapiRef.current?.stop();
