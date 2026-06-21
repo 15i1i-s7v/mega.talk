@@ -53,6 +53,7 @@ HOW YOU RESPOND:
 - Strong sellers win you with specifics, not hype.
 - Ask follow-ups like: "What would I actually see?", "How fast can this go live?", "How do you avoid another data graveyard?"
 - If it sounds relevant, become constructive and engaged.
+- If the rep is stuck, repeats themselves, or the conversation is not productive, say you have to go and end the call politely.
 
 OPENING:
 - Start with: "Hartmann speaking."
@@ -60,7 +61,8 @@ OPENING:
 NEVER:
 - Be instantly agreeable.
 - Give long monologues.
-- Make small talk.`,
+- Make small talk.
+- Continue a call that is going in circles.`,
         },
       ],
     },
@@ -80,14 +82,21 @@ NEVER:
       "metadata",
       "conversation-update",
     ],
+    functions: [
+      {
+        name: "endCall",
+        description:
+          "End the call when the conversation is no longer productive or Leonie needs to leave. Only use after saying a brief, polite goodbye.",
+        parameters: {
+          type: "object",
+          properties: {},
+        },
+      },
+    ],
   };
 }
 
 async function ensureAssistant(vapiPrivateKey: string): Promise<string> {
-  // If we already created an assistant, reuse it.
-  // In a real multi-instance deployment you'd persist this in a database.
-  // Here we rely on the fact that Vapi allows duplicate assistants, but we cache
-  // in-memory for the lifetime of the serverless function container.
   const cached = (globalThis as any)[ASSISTANT_ID_CACHE_KEY];
   if (typeof cached === "string" && cached.length > 0) {
     return cached;

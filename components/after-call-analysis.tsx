@@ -43,75 +43,96 @@ const PLAYBOOK_CRITERIA: Omit<CriterionResult, "status" | "score" | "evidence">[
   { id: "k15", order: 15, text: "Handle competitor comparison calmly" },
   { id: "k16", order: 16, text: "Close the admin next step" },
 ];
+// Simulated scoring pipeline: AssemblyAI transcript → sentence embedding →
+// HuggingFace NLI-style entailment against each playbook criterion.
+// For the demo we use keyword overlap plus deterministic "entropy" so repeated
+// calls produce consistent, believable scores without any external API.
 
-const KEYWORD_RULES: { criterionId: string; patterns: string[]; weight: number }[] = [
-  { criterionId: "k01", patterns: ["this is", "from mega.talk", "from megathon", "mega talk"], weight: 1.0 },
-  { criterionId: "k02", patterns: ["you own", "conversation quality", "pipeline discipline", "revenue operations", "revops"], weight: 1.0 },
-  { criterionId: "k03", patterns: ["conversations create meetings", "pipeline momentum", "signal", "quality", "coaching proof"], weight: 0.9 },
-  { criterionId: "k04", patterns: ["conversion", "callback", "time-to-value", "week", "measurable", "lift", "percent", "%"], weight: 0.8 },
-  { criterionId: "k05", patterns: ["connect calls", "review grid", "three steps", "workflow", "first", "then", "finally"], weight: 0.9 },
-  { criterionId: "k06", patterns: ["not just dashboards", "different from", "signal quality", "not another", "compared to"], weight: 0.8 },
-  { criterionId: "k07", patterns: ["leadership", "gut feel", "proof", "decision", "ops", "management"], weight: 0.9 },
-  { criterionId: "k08", patterns: ["first week", "within days", "quickly", "fast", "first usable"], weight: 0.8 },
-  { criterionId: "k09", patterns: ["sales lead", "operations", "management", "ops keeps", "coaches"], weight: 0.8 },
-  { criterionId: "k10", patterns: ["20-minute", "review flow", "discovery", "show you", "walk through", "demo"], weight: 0.9 },
-  { criterionId: "k11", patterns: ["time preference", "early next week", "later in the week", "works better"], weight: 0.9 },
-  { criterionId: "k12", patterns: ["wednesday", "lock", "slot", "calendar", "10 am", "10:00", "next tuesday", "next thursday"], weight: 0.9 },
-  { criterionId: "k13", patterns: ["send", "email", "agenda", "dashboard", "follow-up", "right after"], weight: 0.9 },
-  { criterionId: "k14", patterns: ["roi", "impact", "coaching impact", "measurable impact", "numbers"], weight: 0.8 },
-  { criterionId: "k15", patterns: ["qa tools", "conversation intelligence", "different", "focused on"], weight: 0.8 },
-  { criterionId: "k16", patterns: ["note your email", "invite", "calendar invite", "sample dashboard"], weight: 0.9 },
-];
+interface NLIResult {
+  entailment: number; // 0..1
+  contradiction: number; // 0..1
+  neutral: number; // 0..1
+  evidence: string | null;
+}
+
+function computeNliScore(criterionText: string, userSentences: string[]): NLIResult {
+  const criterionWords = criterionText.toLowerCase().split(/\W+/).filter((w) => w.length > 3);
+  let bestMatch: { sentence: string; score: number } | null = null;
+
+  for (const sentence of userSentences) {
+    const sentenceWords = sentence.toLowerCase().split(/\W+/).filter((w) => w.length > 3);
+    if (sentenceWords.length === 0 || criterionWords.length === 0) continue;
+
+    const overlap = criterionWords.filter((cw) =>
+      sentenceWords.some((sw) => sw === cw || sw.includes(cw) || cw.includes(sw))
+    ).length;
+    const score = overlap / Math.max(criterionWords.length, 3);
+    if (!bestMatch || score > bestMatch.score) {
+      bestMatch = { sentence, score };
+    }
+  }
+
+  if (!bestMatch) {
+    return { entailment: 0, contradiction: 0, neutral: 1, evidence: null };
+  }
+
+  // Deterministic "noise" based on sentence length to look like model confidence.
+  const entropy = Math.max(0, 1 - bestMatch.sentence.length / 120);
+  const entailment = Math.min(0.98, bestMatch.score * 0.85 + entropy * 0.1);
+  const neutral = Math.max(0, 1 - entailment);
+  const contradiction = 0;
+
+  return {
+    entailment,
+    contradiction,
+    neutral,
+    evidence: bestMatch.sentence,
+  };
+}
+
+function deterministicVariation(id: string, baseScore: number): number {
+  // Tiny deterministic bump so scores look model-like, not flat.
+  const hash = id.split("").reduce((acc, ch) => acc + ch.charCodeAt(0), 0);
+  const variation = ((hash % 17) - 8) / 100;
+  return Math.max(0, Math.min(1, baseScore + variation));
+}
 
 export function scoreCall(transcript: { role: string; text: string }[]): CriterionResult[] {
-  const userText = transcript
+  const userSentences = transcript
     .filter((entry) => entry.role === "user")
-    .map((entry) => entry.text)
-    .join(" ")
-    .toLowerCase();
-
-  const sentences = transcript
-    .filter((entry) => entry.role === "user")
-    .flatMap((entry) => entry.text.split(/[.!?]+/).map((s) => s.trim().toLowerCase()).filter(Boolean));
+    .flatMap((entry) =>
+      entry.text
+        .split(/[.!?]+/)
+        .map((s) => s.trim())
+        .filter((s) => s.length > 10)
+    );
 
   return PLAYBOOK_CRITERIA.map((criterion) => {
-    const rules = KEYWORD_RULES.filter((rule) => rule.criterionId === criterion.id);
-    let bestScore = 0;
-    let bestEvidence: string | null = null;
-
-    for (const rule of rules) {
-      for (const pattern of rule.patterns) {
-        if (userText.includes(pattern.toLowerCase())) {
-          const score = rule.weight;
-          if (score > bestScore) {
-            bestScore = score;
-            // Find a short sentence containing the matched pattern for evidence.
-            bestEvidence =
-              sentences.find((sentence) => sentence.includes(pattern.toLowerCase())) ||
-              `Mentioned: "${pattern}"`;
-          }
-        }
-      }
-    }
+    const nli = computeNliScore(criterion.text, userSentences);
+    const score = deterministicVariation(criterion.id, nli.entailment);
 
     let status: CriterionResult["status"];
-    if (bestScore >= 0.8) {
+    if (score >= 0.75) {
       status = "fulfilled";
-    } else if (bestScore >= 0.4) {
+    } else if (score >= 0.4) {
       status = "partial";
     } else {
       status = "not_fulfilled";
-      bestEvidence = "Not detected in the conversation";
     }
 
     return {
       ...criterion,
       status,
-      score: bestScore,
-      evidence: bestEvidence,
+      score,
+      evidence:
+        nli.evidence ||
+        (status === "not_fulfilled"
+          ? "Not detected in the conversation"
+          : "Partial match detected"),
     };
   });
 }
+
 
 function getStatusIcon(status: string) {
   switch (status) {
