@@ -13,12 +13,12 @@ export default function TrainingPage() {
 
   return (
     <CallStateProvider>
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-background mega-grid-glow">
         {/* Header */}
-        <header className="sticky top-0 z-30 bg-background/95 backdrop-blur-sm border-b border-border">
+        <header className="sticky top-0 z-30 bg-background/85 backdrop-blur-xl border-b border-border">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center shadow-sm">
+              <div className="w-9 h-9 rounded-xl mega-button flex items-center justify-center shadow-sm">
                 <svg
                   className="w-4 h-4 text-white"
                   fill="none"
@@ -33,13 +33,13 @@ export default function TrainingPage() {
                   />
                 </svg>
               </div>
-              <span className="font-display text-lg font-semibold text-foreground tracking-tight">
+              <span className="font-display text-lg text-foreground tracking-[0.08em]">
                 MEGA.TALK
               </span>
             </div>
             <a
               href="/"
-              className="text-sm text-muted hover:text-foreground transition-colors"
+              className="text-sm text-muted hover:text-foreground transition-colors uppercase tracking-[0.16em] font-semibold"
             >
               ← Dashboard
             </a>
@@ -47,7 +47,19 @@ export default function TrainingPage() {
         </header>
 
         {/* Main Grid */}
-        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-28 lg:pb-32">
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-28 lg:pb-32 space-y-6">
+          <section className="mega-panel rounded-[28px] p-5 sm:p-6">
+            <p className="mega-kicker mb-3">Live Simulation</p>
+            <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+              <div>
+                <h1 className="text-3xl sm:text-4xl text-foreground">Cold Call Arena</h1>
+                <p className="mt-2 text-sm text-muted max-w-2xl">
+                  Run the persona simulation, hold script discipline, and close for a next step. Scoreboard follows immediately after the call ends.
+                </p>
+              </div>
+              <div className="mega-pill">Thomas Maier · Active Persona</div>
+            </div>
+          </section>
           {showAnalysis ? (
             <AfterCallAnalysis onBack={() => setShowAnalysis(false)} />
           ) : (
