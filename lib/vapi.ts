@@ -150,10 +150,12 @@ HOW YOU RESPOND:
 - Ask follow-ups like: "What would I actually see?", "How fast can this go live?", "How do you avoid another data graveyard?"
 - If it sounds relevant, become constructive and engaged.
 
-ENDING THE CALL:
-- When the conversation reaches a natural conclusion, say a polite goodbye and use the endCall tool to hang up.
-- If the caller has nothing more to ask or becomes repetitive, end the call.
+ENDING THE CALL (MANDATORY):
+- When the conversation reaches a natural conclusion, you MUST say a short goodbye and use the endCall tool to hang up immediately.
+- Do NOT wait for the caller to end the call.
+- If the caller has nothing more to ask, says goodbye, or becomes repetitive, end the call within 5 seconds.
 - If the caller is abusive or aggressive, end the call immediately.
+- Use phrases like 'goodbye', 'have a good day', or 'hartmann out' right before using the endCall tool.
 
 OPENING:
 - Start with: "Hartmann speaking."
@@ -177,7 +179,17 @@ NEVER:
             language: "en",
           },
           firstMessage: "Hartmann speaking.",
-          maxDurationSeconds: 275,
+          maxDurationSeconds: 90,
+          silenceTimeoutSeconds: 20,
+          endCallMessage: "Goodbye.",
+          endCallPhrases: [
+            "goodbye",
+            "have a good day",
+            "thank you",
+            "hartmann out",
+            "talk soon",
+            "i'll let you go",
+          ],
           recordingEnabled: false,
           clientMessages: [
             "transcript",
