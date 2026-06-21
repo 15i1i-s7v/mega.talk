@@ -48,6 +48,8 @@ export function useVapi() {
       const message = error?.message || "Vapi failed to start.";
       if (/permission denied|notallowederror|microphone/i.test(message)) {
         setError("Microphone permission is blocked. Allow microphone access in the browser and try again.");
+      } else if (/krisp|mic processor|audio processor|noise.?cancellation/i.test(message)) {
+        setError("Browser audio processor failed to initialize. Try Chrome/Edge or refresh the page.");
       } else {
         setError(message);
       }
@@ -61,20 +63,25 @@ export function useVapi() {
 
   return {
     start: async () => {
-      if (!vapiRef.current) throw new Error("VAPI not initialized");
-      try {
-        setError(null);
+      const publicKey = process.env.NEXT_PUBLIC_VAPI_PUBLIC_KEY;
+      if (!publicKey) {
+        const msg = "Vapi configuration is missing.";
+        setError(msg);
+        throw new Error(msg);
+      }
 
-        const assistantConfig = {
-          name: "Leonie Hartmann",
-          model: {
-            provider: "openai",
-            model: "gpt-4",
-            temperature: 0.7,
-            messages: [
-              {
-                role: "system",
-                content: `You are Leonie Hartmann, Head of Revenue Operations at Nordstern Industrietechnik. You run RevOps for a distributed B2B sales team with SDRs, AEs, and inside sales.
+      setError(null);
+
+      const assistantConfig = {
+        name: "Leonie Hartmann",
+        model: {
+          provider: "openai",
+          model: "gpt-4",
+          temperature: 0.7,
+          messages: [
+            {
+              role: "system",
+              content: `You are Leonie Hartmann, Head of Revenue Operations at Nordstern Industrietechnik. You run RevOps for a distributed B2B sales team with SDRs, AEs, and inside sales.
 
 COMMUNICATION STYLE:
 - Speak only in English.
@@ -113,38 +120,87 @@ NEVER:
 - Be instantly agreeable.
 - Give long monologues.
 - Make small talk.`,
-              },
-            ],
-          },
-          voice: {
-            model: "eleven_turbo_v2_5",
-            voiceId: "N2lSxRHaA58vqI0NIV3R",
-            provider: "11labs",
-            stability: 0.5,
-            similarityBoost: 0.75,
-          },
-          firstMessage: "Hartmann speaking.",
-          transcriber: {
-            provider: "deepgram",
-            model: "nova-2",
-            language: "en",
-          },
-          maxDurationSeconds: 275,
-          recordingEnabled: false,
-          clientMessages: [
-            "transcript",
-            "hang",
-            "function-call",
-            "speech-update",
-            "metadata",
-            "conversation-update",
+            },
           ],
-        };
+        },
+        voice: {
+          model: "eleven_turbo_v2_5",
+          voiceId: "N2lSxRHaA58vqI0NIV3R",
+          provider: "11labs",
+          stability: 0.5,
+          similarityBoost: 0.75,
+        },
+        firstMessage: "Hartmann speaking.",
+        transcriber: {
+          provider: "deepgram",
+          model: "nova-2",
+          language: "en",
+        },
+        maxDurationSeconds: 275,
+        recordingEnabled: false,
+        clientMessages: [
+          "transcript",
+          "hang",
+          "function-call",
+          "speech-update",
+          "metadata",
+          "conversation-update",
+        ],
+      };
 
-        await vapiRef.current.start(assistantConfig as any);
+      // Pre-warm microphone to avoid Krisp/WASM init failures in Firefox/Chrome
+      let audioTrack: MediaStreamTrack | undefined;
+      try {
+        const warmupStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        [audioTrack] = warmupStream.getAudioTracks();
+        // Stop the original track's stream context; we only need the track handle
+        // for Vapi to use as the audioSource. The browser keeps the mic permission warm.
+        if (audioTrack && typeof audioTrack.stop === "function") {
+          try { audioTrack.stop(); } catch { /* ignore */ }
+        }
+      } catch (micErr) {
+        console.warn("Microphone warm-up failed, falling back to default:", micErr);
+      }
+
+      try {
+        // Recreate Vapi with the pre-warmed audio source so Daily does not
+        // re-initialize the Krisp noise-cancellation processor from a cold state.
+        const vapi = audioTrack
+          ? new Vapi(publicKey, undefined, undefined, { audioSource: audioTrack })
+          : new Vapi(publicKey);
+        vapiRef.current = vapi;
+
+        vapi.on("call-start", () => {
+          setIsConnected(true);
+          setError(null);
+        });
+        vapi.on("call-end", () => {
+          setIsConnected(false);
+          setIsSpeaking(false);
+        });
+        vapi.on("speech-start", () => setIsSpeaking(true));
+        vapi.on("speech-end", () => setIsSpeaking(false));
+        vapi.on("message", (message) => {
+          if (message.type === "transcript") {
+            console.log("💬", message.transcript);
+          }
+        });
+        vapi.on("error", (err) => {
+          console.error("VAPI Error:", err);
+          const message = err?.message || "Vapi failed to start.";
+          if (/permission denied|notallowederror|microphone/i.test(message)) {
+            setError("Microphone permission is blocked. Allow microphone access in the browser and try again.");
+          } else if (/krisp|mic processor|audio processor|noise.?cancellation/i.test(message)) {
+            setError("Browser audio processor failed to initialize. Try Chrome/Edge or refresh the page.");
+          } else {
+            setError(message);
+          }
+          setIsConnected(false);
+        });
+
+        await vapi.start(assistantConfig as any);
       } catch (err) {
-        const errorMessage =
-          err instanceof Error ? err.message : "Failed to start call";
+        const errorMessage = err instanceof Error ? err.message : "Failed to start call";
         setError(errorMessage);
         throw err;
       }
