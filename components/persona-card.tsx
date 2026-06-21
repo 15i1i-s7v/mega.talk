@@ -62,7 +62,7 @@ export function PersonaCard({
 
         <div className="space-y-3 mb-4">
           <h4 className="text-xs font-semibold text-muted uppercase tracking-wider">
-            Hintergrund
+            Background
           </h4>
           <ul className="space-y-2">
             {PERSONA.background.map((item, idx) => (
@@ -79,7 +79,7 @@ export function PersonaCard({
 
         <div className="space-y-3 mb-4">
           <h4 className="text-xs font-semibold text-muted uppercase tracking-wider">
-            Team & Betrieb
+            Team and operating model
           </h4>
           <ul className="space-y-2">
             {PERSONA.currentTeam.map((item, idx) => (
@@ -121,17 +121,17 @@ export function PersonaCard({
           {isConnecting ? (
             <>
               <Loader2 className="w-4 h-4 animate-spin" />
-              Verbinde...
+              Connecting...
             </>
           ) : isCallActive ? (
             <>
               <PhoneOff className="w-4 h-4" />
-              Beenden
+              End call
             </>
           ) : (
             <>
               <Phone className="w-4 h-4" />
-              Anruf starten
+              Start call
             </>
           )}
         </button>

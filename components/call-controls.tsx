@@ -43,7 +43,7 @@ export function CallControls({
 
   useEffect(() => {
     if (isConnected && callState === "connecting") {
-      toast.success("Verbunden mit Leonie Hartmann");
+      toast.success("Connected to Leonie Hartmann");
     }
   }, [isConnected, callState]);
 
@@ -60,12 +60,12 @@ export function CallControls({
     endCall();
     setIsMuted(false);
     setIsProcessing(true);
-    toast.info("Gespräch wird analysiert...");
+      toast.info("Analyzing call...");
 
     // Simulate pipeline processing
     setTimeout(() => {
       setIsProcessing(false);
-      toast.success("Analyse abgeschlossen");
+      toast.success("Analysis complete");
       if (onShowAnalysis) onShowAnalysis();
     }, 2500);
   };
@@ -76,7 +76,7 @@ export function CallControls({
     const newMuted = !isMuted;
     setMuted(newMuted);
     setIsMuted(newMuted);
-    toast.info(newMuted ? "Mikrofon stumm" : "Mikrofon aktiv");
+    toast.info(newMuted ? "Microphone muted" : "Microphone live");
   };
 
   const formatDuration = (seconds: number) => {
@@ -95,7 +95,7 @@ export function CallControls({
               className="group inline-flex items-center gap-2.5 px-6 py-3 rounded-xl mega-button text-[#2a1c08] font-semibold text-sm transition-all shadow-sm mega-hover-lift"
             >
               <Sparkles className="w-4 h-4" />
-              Training starten
+              Start training
             </button>
           </div>
         )}
@@ -105,7 +105,7 @@ export function CallControls({
             <div className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-accent/10 border border-accent/20 animate-glow-pulse">
               <Loader2 className="w-4 h-4 animate-spin text-accent" />
               <span className="text-sm font-medium text-foreground">
-                Verbinde mit Leonie Hartmann...
+                Connecting to Leonie Hartmann...
               </span>
             </div>
           </div>
@@ -126,7 +126,7 @@ export function CallControls({
                   ? "bg-error/10 border-error/30 text-error"
                   : "bg-background border-border text-muted hover:text-foreground"
               }`}
-              title={isMuted ? "Mikrofon aktivieren" : "Stummschalten"}
+              title={isMuted ? "Unmute microphone" : "Mute microphone"}
             >
               {isMuted ? (
                 <MicOff className="w-4 h-4" />
@@ -140,7 +140,7 @@ export function CallControls({
               className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-error text-white font-semibold text-sm hover:bg-[#B03030] transition-colors mega-hover-lift"
             >
               <PhoneOff className="w-4 h-4" />
-              Beenden
+              End call
             </button>
           </div>
         )}
@@ -152,7 +152,7 @@ export function CallControls({
                 <Loader2 className="w-4 h-4 animate-spin text-accent" />
                 <div>
                   <p className="text-sm font-medium text-foreground">
-                    Analysiere Gespräch
+                    Analyzing conversation
                   </p>
                   <p className="text-xs text-muted">
                     AssemblyAI → HuggingFace NLI → Score
@@ -162,7 +162,7 @@ export function CallControls({
             ) : (
               <>
                 <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-background border border-border">
-                  <span className="text-sm text-muted">Analyse bereit</span>
+                  <span className="text-sm text-muted">Analysis ready</span>
                 </div>
                 {onShowAnalysis && (
                   <button
@@ -170,7 +170,7 @@ export function CallControls({
                     className="inline-flex items-center gap-2 px-5 py-3 rounded-xl mega-button text-[#2a1c08] font-semibold text-sm transition-colors shadow-sm mega-hover-lift"
                   >
                     <BarChart3 className="w-4 h-4" />
-                    Auswertung ansehen
+                    View analysis
                   </button>
                 )}
                 <button
@@ -178,7 +178,7 @@ export function CallControls({
                   className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-background border border-border text-foreground font-semibold text-sm hover:bg-accent/5 transition-colors mega-hover-lift"
                 >
                   <Phone className="w-4 h-4" />
-                  Erneut versuchen
+                  Try again
                 </button>
               </>
             )}

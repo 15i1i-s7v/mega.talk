@@ -2,243 +2,242 @@ export const PERSONA = {
   name: "Leonie Hartmann",
   role: "Head of Revenue Operations",
   company: "Nordstern Industrietechnik GmbH",
-  industry: "Technischer Großhandel / B2B Vertrieb",
-  companySize: "68 Mitarbeiter, 3 Vertriebsstandorte in DACH",
-  location: "Kassel, Deutschland",
+  industry: "Technical distribution / B2B sales",
+  companySize: "68 employees across 3 DACH sales locations",
+  location: "Kassel, Germany",
   category: "Outbound Enablement",
-  callType: "Erstkontakt",
+  callType: "First touch",
 
   background: [
-    "Verantwortet Forecast-Hygiene, SDR-Steuerung und Pipeline-Reviews",
-    "Betreut ein Team aus Inbound, Outbound und Sales Ops in drei Regionen",
-    "Arbeitet mit CRM, Dialer und BI, aber ohne einheitliche Gesprächssicht",
-    "Ist skeptisch gegenüber Tools, die nur 'noch ein Dashboard' liefern",
+    "Owns forecast hygiene, SDR management, and pipeline reviews",
+    "Leads inbound, outbound, and sales-ops workflows across three regions",
+    "Works with CRM, dialer, and BI, but still lacks one clean conversation view",
+    "Skeptical of tools that feel like just another dashboard",
   ],
 
   currentTeam: [
-    "9 SDRs und 4 AEs mit stark schwankender Gesprächsqualität",
-    "Coaching findet punktuell statt, meist erst nach verlorenen Deals",
-    "Reporting ist auf CRM-Felder beschränkt, nicht auf Gesprächssignale",
-    "Führung will wissen, welche Talk-Tracks wirklich Termine erzeugen",
+    "9 SDRs and 4 AEs with inconsistent conversation quality",
+    "Coaching happens too late, often only after deals are already lost",
+    "Reporting is limited to CRM fields rather than conversation signals",
+    "Leadership wants proof of which talk tracks actually create meetings",
   ],
 
   recentActivity: [
-    "Q3-Initiative: SQL-Quote im Mid-Market sichtbar steigern",
-    "Vergleicht aktuell AI-Assistants mit klassischen QA-Call-Reviews",
-    "Muss im nächsten Leadership-Review belastbare Coaching-Belege zeigen",
+    "Q3 initiative: lift SQL conversion in the mid-market segment",
+    "Actively comparing AI assistants with classic QA call reviews",
+    "Needs hard coaching proof for the next leadership review",
   ],
 
   languages: [
-    { flag: "🇩🇪", name: "Deutsch", level: "Muttersprache" },
-    { flag: "🇬🇧", name: "Englisch", level: "Business-sicher" },
+    { flag: "🇩🇪", name: "German", level: "Native" },
+    { flag: "🇬🇧", name: "English", level: "Business fluent" },
   ],
 
   difficulty: 5,
   difficultyReason:
-    "Datenstarke Ops-Leiterin, hört sofort auf schwache ROI-Behauptungen und fordert konkrete Signal- und Coaching-Beweise",
+    "Data-heavy ops leader who rejects weak ROI claims and demands clear signal and coaching proof",
 
-  firstMessage: "Hartmann, guten Tag.",
+  firstMessage: "Hartmann speaking.",
 };
 
-export const PLAYBOOK = `# Leitfaden: Outbound-Enablement für Revenue Teams
+export const PLAYBOOK = `# Guide: Outbound Enablement for Revenue Teams
 
-Zielgruppe: Revenue Operations, Inside-Sales-Leads und Vertriebsleiter in verteilten B2B-Teams.
-Ziel: Discovery-Termin zu einem messbaren Coaching- und Pipeline-Review mit MEGA.TALK vereinbaren.
-
----
-
-## 1. Einstieg mit Kontext und Name
-
-**Schritt:** Begrüße den Empfang freundlich mit deinem vollständigen Namen.
-
-> "Guten Morgen, Frau/Herr …, mein Name ist [Vorname Nachname] von [Firma]."
-
-**Warum:** Der erste Satz soll ruhig, präzise und vertrauenswürdig sein. Keine Show, kein Pitch zu früh.
+Audience: revenue operations leaders, inside-sales managers, and commercial leaders across distributed B2B teams.
+Goal: book a discovery meeting around a measurable coaching and pipeline review with MEGA.TALK.
 
 ---
 
-## 2. Kurz auf Orientierung gehen
+## 1. Open with context and identity
 
-**Schritt:** Bitte den Empfang um Hilfe — das schafft Verbindlichkeit und signalisiert Respekt.
+**Step:** Start calmly and identify yourself with your full name.
 
-> "Frau/Herr …, Sie müssen mir bitte einmal helfen."
+> "Good morning, this is [First Name Last Name] from [Company]."
 
----
-
-## 3. Verantwortungsbereich statt Funktionsname abfragen
-
-**Schritt:** Frage nach dem richtigen Ansprechpartner für dein Thema. Zeige, dass du weisst, wonach du suchst.
-
-> "Wer verantwortet bei Ihnen Gesprächsqualität, Terminquote und Pipeline-Disziplin im Outbound?"
+**Why:** The first sentence should feel precise and credible. No performance, no pitch too early.
 
 ---
 
-## 4. Direkten Anschluss sichern
+## 2. Ask for orientation first
 
-**Schritt:** Frage nach der Durchwahl des genannten Ansprechpartners.
+**Step:** Ask for help first. It creates cooperation and keeps the tone respectful.
 
-> "Der Herr … / Die Frau …? Welche Durchwahl hat er/sie denn?"
-
----
-
-## 5. Aktiv um Verbindung bitten
-
-**Schritt:** Bitte den Empfang klar darum, dich zu verbinden.
-
-> "Sind Sie so gut, Frau/Herr …, und verbinden Sie mich?"
+> "Could you help me for a second?"
 
 ---
 
-## 6. Nur bei Rückfrage den Anlass öffnen
+## 3. Ask for ownership, not job title
 
-**Schritt:** Erkläre kurz dein Thema und führe mit einer Frage zur Ansprechpartner-Ermittlung zurück.
+**Step:** Ask for the person who owns the problem, not just a function label.
 
-> "Gern. Wir machen sichtbar, welche Gespräche wirklich Termine, Wiedervorlagen und Pipeline-Momentum erzeugen — inklusive Coaching-Spuren für Führung und Sales Ops. Wer verantwortet das bei Ihnen?"
-
----
-
-## 7. Erreichung positiv bestätigen
-
-**Schritt:** Bestätige positiv, dass du den richtigen Ansprechpartner erreichst hast. Nenne erneut deinen Namen und deine Firma.
-
-> "Hallo Herr/Frau …, schön, dass ich Sie erreiche. Mein Name ist [Vorname Nachname] von [Firma]."
+> "Who owns conversation quality, meeting conversion, and pipeline discipline in outbound?"
 
 ---
 
-## 8. Zuständigkeit sauber verifizieren
+## 4. Secure the direct line
 
-**Schritt:** Prüfe kurz, ob du beim richtigen Ansprechpartner bist.
+**Step:** Ask for the direct extension or handoff path.
 
-> "Bin ich bei Ihnen richtig, wenn es um Gesprächsqualität, Coaching-Nachweise und die Frage geht, welche Talk-Tracks wirklich Pipeline erzeugen?"
-
----
-
-## 9. Direkt in den operativen Schmerz
-
-**Schritt:** Komme direkt zum Punkt — benenne den operativen Engpass, nicht das Tool.
-
-> "Viele Revenue-Teams sehen heute Aktivität, aber nicht, welche Gespräche wirklich in valide nächste Schritte übersetzen. Genau dort setzt MEGA.TALK an."
+> "Great — what is the best direct line or extension for them?"
 
 ---
 
-## 10. Messbaren Hebel nennen
+## 5. Ask to be connected
 
-**Schritt:** Nenne den klaren Hebel: schnelleres Coaching, sauberere Termine, belastbarere Pipeline.
+**Step:** Clearly ask to be connected.
 
-> "Führung sieht innerhalb von Tagen, welche Gesprächsmuster Termine treiben, wo Einwände hängen bleiben und welche Reps replizierbare Signale liefern."
-
----
-
-## 11. Ablauf in drei Schritten erklären
-
-**Schritt:** Beschreibe konkret, wie die Zusammenarbeit abläuft.
-
-> "Wir verbinden Calls, legen euren Leitfaden als beobachtbares Raster an und zeigen dann pro Rep, Motion und Outcome die Signale, die wirklich zu Meetings führen."
-
-> "Anschließend bekommt Sales Führung keine Bauchgefühle mehr, sondern sichtbare Coaching-Lücken, Conversion-Sprünge und belastbare Review-Unterlagen."
+> "Would you connect me, please?"
 
 ---
 
-## 12. Führungsvorteil benennen
+## 6. Explain the reason only if pushed
 
-**Schritt:** Nenne einen konkreten Kundennutzen — planbare Tests, Zeitersparnis oder Sicherheit.
+**Step:** If asked, explain the topic briefly and hand control back with a question.
 
-> "Das bedeutet für Sie: weniger blindes Coaching, sauberere Forecast-Gespräche und ein klarer Nachweis, welche Gesprächsqualität tatsächlich Umsatz vorbereitet."
-
----
-
-## 13. Nächsten Schritt auf Augenhöhe platzieren
-
-**Schritt:** Schlage einen konkreten nächsten Schritt vor — dass euer Geschäftsführer das Ganze telefonisch oder vor Ort zeigt.
-
-> "Statt das jetzt theoretisch zu halten, zeige ich Ihnen lieber in 20 Minuten einen echten Review-Flow mit anonymisierten Gesprächsdaten."
+> "Sure. We help teams see which conversations actually create meetings, callbacks, and pipeline momentum — with coaching proof leadership can use. Who owns that on your side?"
 
 ---
 
-## 14. Zeitpräferenz erfragen
+## 7. Confirm the reach positively
 
-**Schritt:** Frage nach einer grundsätzlichen Zeitpräferenz — vormittags oder nachmittags.
+**Step:** Confirm that you reached the right person and re-state your name and company.
 
-> "Passt es Ihnen grundsätzlich besser vormittags oder nachmittags?"
-
----
-
-## 15. Konkreten Termin vorschlagen
-
-**Schritt:** Schlage einen konkreten Termin vor, nachdem der Kunde einen Zeitraum genannt hat.
-
-> "Alles klar, wie wäre es nächste Woche … um …?"
+> "Glad I caught you. This is [First Name Last Name] from [Company]."
 
 ---
 
-## 16. E-Mail-Adresse für Terminbestätigung
+## 8. Verify ownership cleanly
 
-**Schritt:** Frage nach der E-Mail-Adresse für die Terminbestätigung.
+**Step:** Check that you are speaking with the actual owner of the problem.
 
-> "Super. Dann bräuchte ich bitte einmal Ihre Mailadresse für die Terminbestätigung."
+> "Am I right that you look after conversation quality, coaching proof, and the question of which talk tracks really create pipeline?"
 
+---
+
+## 9. Go straight to the operating pain
+
+**Step:** Name the operational bottleneck, not the product first.
+
+> "Most revenue teams can see activity, but they still cannot see which conversations turn into valid next steps. That is where MEGA.TALK fits."
+
+---
+
+## 10. Name the measurable lever
+
+**Step:** Give the measurable upside: faster coaching, cleaner meetings, more reliable pipeline insight.
+
+> "Leadership can see within days which talk patterns drive meetings, where objections stall, and which reps are creating repeatable signals."
+
+---
+
+## 11. Explain the workflow in three moves
+
+**Step:** Explain exactly how the workflow operates.
+
+> "We connect calls, map your guide into observable behaviors, and then show which signals actually lead to meetings by rep, motion, and outcome."
+
+> "That gives sales leadership visible coaching gaps, conversion jumps, and review material they can actually use."
+
+---
+
+## 12. State the leadership value
+
+**Step:** State the specific business value for leadership.
+
+> "That means less blind coaching, cleaner forecast conversations, and clearer proof of which conversation quality actually prepares revenue."
+
+---
+
+## 13. Offer the next step on equal footing
+
+**Step:** Offer a concrete next step without sounding performative.
+
+> "Instead of keeping this theoretical, I would rather show you a 20-minute anonymized review flow with real coaching gaps and signal distribution."
+
+---
+
+## 14. Ask for time preference
+
+**Step:** Ask for a broad time preference before naming a slot.
+
+> "Is earlier in the week better for you, or later in the week?"
+
+---
+
+## 15. Suggest a concrete slot
+
+**Step:** Once a time band is given, propose a specific slot.
+
+> "Great — how does Wednesday at 10 work?"
+
+---
+
+## 16. Confirm the follow-up address
+
+**Step:** Ask for the email address to send the invite and recap.
+
+> "Perfect. What email should I use for the invite and the sample dashboard?"
 `;
 
 export const PLACEHOLDER_PERSONAS = [
   {
-    name: "Stefan Berger",
-    role: "Einkaufsleiter Elektronik",
-    company: "Bergmann Industrie GmbH",
-    location: "Stuttgart, Deutschland",
-    category: "Kaltakquise",
-    callType: "Erstkontakt",
-    difficulty: 3,
-    languages: [{ flag: "🇩🇪", name: "Deutsch", level: "Muttersprache" }],
-    locked: true,
-  },
-  {
-    name: "Klaus Werner",
-    role: "Leiter Fertigungsplanung",
-    company: "WECO Electronic GmbH",
-    location: "München, Deutschland",
-    category: "Kaltakquise",
-    callType: "Follow-up",
-    difficulty: 3,
-    languages: [{ flag: "🇩🇪", name: "Deutsch", level: "Muttersprache" }],
-    locked: true,
-  },
-  {
-    name: "Dr. Andrea Fuchs",
-    role: "Bereichsleiterin Entwicklung",
-    company: "Fuchs & Partner Elektronik",
-    location: "Nürnberg, Deutschland",
-    category: "Kaltakquise",
+    name: "Mira Seidel",
+    role: "VP Inside Sales",
+    company: "Aurelia Commerce Group",
+    location: "Cologne, Germany",
+    category: "RevOps",
     callType: "Discovery",
     difficulty: 4,
     languages: [
-      { flag: "🇩🇪", name: "Deutsch", level: "Muttersprache" },
-      { flag: "🇬🇧", name: "Englisch", level: "Fließend" },
+      { flag: "🇩🇪", name: "German", level: "Native" },
+      { flag: "🇬🇧", name: "English", level: "Fluent" },
     ],
     locked: true,
   },
   {
-    name: "Martin Hofmann",
-    role: "CTO",
-    company: "Hofmann Technologies AG",
-    location: "Zürich, Schweiz",
-    category: "Kaltakquise",
-    callType: "Erstkontakt",
+    name: "Jonas Eckert",
+    role: "Sales Director DACH",
+    company: "Helion Systems",
+    location: "Stuttgart, Germany",
+    category: "Pipeline QA",
+    callType: "First touch",
+    difficulty: 3,
+    languages: [{ flag: "🇩🇪", name: "German", level: "Native" }],
+    locked: true,
+  },
+  {
+    name: "Sara Blum",
+    role: "Head of Revenue Excellence",
+    company: "Helvetic Cloud Works",
+    location: "Zurich, Switzerland",
+    category: "Coaching",
+    callType: "First touch",
     difficulty: 5,
     languages: [
-      { flag: "🇩🇪", name: "Deutsch", level: "Muttersprache" },
-      { flag: "🇬🇧", name: "Englisch", level: "Fließend" },
+      { flag: "🇩🇪", name: "German", level: "Native" },
+      { flag: "🇬🇧", name: "English", level: "Fluent" },
     ],
     locked: true,
   },
   {
-    name: "Petra Klein",
-    role: "Geschäftsführerin",
-    company: "Klein PCB Solutions",
-    location: "Dresden, Deutschland",
-    category: "Kaltakquise",
-    callType: "Demo",
+    name: "Priya Malhotra",
+    role: "Commercial Operations Lead",
+    company: "Northline Systems",
+    location: "Berlin, Germany",
+    category: "Signal Audit",
+    callType: "Review",
     difficulty: 3,
-    languages: [{ flag: "🇩🇪", name: "Deutsch", level: "Muttersprache" }],
+    languages: [{ flag: "🇬🇧", name: "English", level: "Native" }],
+    locked: true,
+  },
+  {
+    name: "Noah Fischer",
+    role: "Chief Revenue Officer",
+    company: "Vector Ridge",
+    location: "Munich, Germany",
+    category: "Forecast Review",
+    callType: "Executive follow-up",
+    difficulty: 4,
+    languages: [{ flag: "🇬🇧", name: "English", level: "Fluent" }],
     locked: true,
   },
 ];
@@ -273,7 +272,7 @@ export const VOLUME_TREND = [
 ];
 
 export const SIGNAL_FEED = [
-  { lane: "Motion Alpha", note: "Callback intent peaks after direct pain framing", metric: "+58% callback intent" },
-  { lane: "Motion Beta", note: "Positive outcomes happen on longer, multi-step discovery calls", metric: "448s avg positive call" },
-  { lane: "Ops Review", note: "Tag coverage still leaks volume into unknown outcomes", metric: "17% missing outcome tag" },
+  { lane: "Timing", note: "Morning call blocks produce the strongest callback momentum in the current sample.", metric: "08:00–12:00" },
+  { lane: "Coaching", note: "Unknown-tag and negative calls should be coached before anything else because they hide signal and drain review quality.", metric: "17% + 18%" },
+  { lane: "Scale", note: "Long-form positive discovery patterns should be rolled into every rep workflow as the team playbook baseline.", metric: "448s avg" },
 ];
