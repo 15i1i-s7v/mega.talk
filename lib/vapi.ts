@@ -22,7 +22,12 @@ function getOrCreateVapi(publicKey: string): Vapi {
     return globalVapiInstance;
   }
   destroyVapi();
-  globalVapiInstance = new Vapi(publicKey);
+  // startAudioOff: true delays microphone initialization until we explicitly
+  // unmute. This avoids the Krisp/WASM crash in Firefox when Daily cold-starts
+  // the audio processor.
+  globalVapiInstance = new Vapi(publicKey, undefined, undefined, {
+    startAudioOff: true,
+  });
   globalVapiKey = publicKey;
   return globalVapiInstance;
 }
@@ -82,6 +87,14 @@ export function useVapi() {
       const onCallStart = () => {
         setIsConnected(true);
         setError(null);
+        // After the call object exists, explicitly enable microphone input.
+        setTimeout(() => {
+          try {
+            vapi.setMuted(false);
+          } catch {
+            // ignore
+          }
+        }, 300);
       };
       const onCallEnd = () => {
         setIsConnected(false);
@@ -106,6 +119,14 @@ export function useVapi() {
           transcript.length = 0;
           transcript.push(...normalized);
           onTranscript?.([...transcript]);
+        }
+        // Handle the assistant's endCall tool: stop the call client-side.
+        if (message.type === "function-call" && message.functionCall?.name === "endCall") {
+          try {
+            vapi.stop();
+          } catch {
+            // ignore
+          }
         }
       };
       const onError = (err: any) => {
