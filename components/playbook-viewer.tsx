@@ -13,7 +13,7 @@ export function PlaybookViewer() {
           <div className="w-1 h-7 bg-accent rounded-full" />
           <div>
             <h2 className="font-display text-lg font-semibold text-foreground">
-              Leitfaden
+              Guide
             </h2>
             <p className="text-xs text-muted">
               Revenue Ops Discovery — MEGA.TALK
