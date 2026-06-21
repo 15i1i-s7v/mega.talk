@@ -13,9 +13,9 @@ import {
 import { OUTCOME_MIX, SIGNAL_FEED, SIGNAL_OVERVIEW, VOLUME_TREND } from "@/lib/data";
 
 const STATS = [
-  { label: "Tracked Calls", value: SIGNAL_OVERVIEW.trackedCalls.toLocaleString("de-DE"), icon: Phone, trend: "anonymisierte Ground Truth" },
-  { label: "Callback Intent", value: `${SIGNAL_OVERVIEW.callbackIntentRate}%`, icon: TrendingUp, trend: "Wiedervorlage + persönliche Follow-ups" },
-  { label: "Ø Talk Time", value: `${SIGNAL_OVERVIEW.avgCallSeconds}s`, icon: BarChart3, trend: "über alle anonymisierten Sessions" },
+  { label: "Tracked Calls", value: SIGNAL_OVERVIEW.trackedCalls.toLocaleString("en-US"), icon: Phone, trend: "anonymized ground truth" },
+  { label: "Callback Intent", value: `${SIGNAL_OVERVIEW.callbackIntentRate}%`, icon: TrendingUp, trend: "callbacks and follow-ups combined" },
+  { label: "Avg Talk Time", value: `${SIGNAL_OVERVIEW.avgCallSeconds}s`, icon: BarChart3, trend: "across all anonymized sessions" },
   { label: "Pipeline-Status", value: "Live", icon: Target, trend: "AssemblyAI · HF Inference" },
 ];
 
@@ -102,22 +102,21 @@ export default function Home() {
                 <div className="flex items-center justify-between mb-5">
                   <div>
                     <p className="mega-kicker mb-2">Revenue Signal Snapshot</p>
-                    <h2 className="font-display text-2xl text-foreground">What the data actually says</h2>
+                    <h2 className="font-display text-2xl text-foreground">What should sales do next?</h2>
                   </div>
-                  <div className="mega-pill">PII removed · ground truth aggregated</div>
+                  <div className="mega-pill">PII removed · insight layer</div>
                 </div>
-                <div className="space-y-4">
-                  {OUTCOME_MIX.map((outcome) => (
-                    <div key={outcome.label}>
-                      <div className="flex items-center justify-between text-sm mb-2">
-                        <span className="text-foreground font-medium">{outcome.label}</span>
-                        <span className={`${outcome.tone} font-semibold`}>
-                          {outcome.share}% · {outcome.value.toLocaleString("de-DE")}
-                        </span>
-                      </div>
-                      <div className="h-2 rounded-full bg-white/5 overflow-hidden">
-                        <div className={`${outcome.bar} h-full rounded-full transition-all duration-700`} style={{ width: `${outcome.share}%` }} />
-                      </div>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  {[
+                    ["When should we call?", "08:00–12:00", "Morning windows produce the strongest callback rates, with the sharpest performance before noon."],
+                    ["What needs coaching first?", "Negative + unknown clusters", "Start with weak qualification and missing outcome discipline before touching anything else."],
+                    ["What beats the script?", "Longer positive conversations", "Positive calls stay alive much longer, which means strong reps are earning permission to explore instead of rushing the script."],
+                    ["How do we scale what works?", "Promote winning talk tracks", "Turn the highest-callback openings into repeatable coaching plays and push them to every rep workflow."],
+                  ].map(([question, answer, detail]) => (
+                    <div key={question} className="rounded-2xl border border-border bg-white/[0.02] p-4">
+                      <p className="text-[11px] uppercase tracking-[0.18em] text-muted mb-2">{question}</p>
+                      <p className="text-lg font-semibold text-foreground mb-2">{answer}</p>
+                      <p className="text-sm text-muted leading-relaxed">{detail}</p>
                     </div>
                   ))}
                 </div>
@@ -126,12 +125,15 @@ export default function Home() {
               <div className="mega-panel rounded-[28px] p-6">
                 <p className="mega-kicker mb-2">Call Volume Cadence</p>
                 <h2 className="font-display text-2xl text-foreground mb-5">Recent spikes</h2>
-                <div className="flex items-end gap-3 h-44">
+                <div className="flex items-end gap-3 h-48">
                   {VOLUME_TREND.map((point) => (
-                    <div key={point.date} className="flex-1 flex flex-col items-center gap-2">
-                      <div className="text-[10px] text-muted">{point.count}</div>
+                    <div key={point.date} className="flex-1 h-full flex flex-col items-center justify-end gap-2">
+                      <div className="text-[10px] text-muted h-4">{point.count}</div>
                       <div className="w-full rounded-t-xl bg-gradient-to-t from-accent to-mega-gold-bright/80 animate-fade-in" style={{ height: `${Math.max(10, (point.count / 218) * 120)}px` }} />
-                      <div className="text-[10px] uppercase tracking-[0.14em] text-muted">{point.date}</div>
+                      <div className="h-8 flex flex-col items-center justify-start text-[10px] uppercase tracking-[0.14em] text-muted leading-none">
+                        <span>{point.date.split(" ")[0]}</span>
+                        <span>{point.date.split(" ")[1]}</span>
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -147,7 +149,7 @@ export default function Home() {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-foreground">
-                    Pipeline aktiv
+                    Pipeline live
                   </p>
                   <p className="text-xs text-muted">
                     SoftBCom SCC → AssemblyAI → HuggingFace NLI → Score
@@ -167,7 +169,7 @@ export default function Home() {
               <h2 className="font-display text-xl text-foreground">
                 Motions
               </h2>
-              <span className="text-xs text-muted uppercase tracking-[0.18em]">3 Demo-Motions</span>
+              <span className="text-xs text-muted uppercase tracking-[0.18em]">3 demo motions</span>
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -198,9 +200,9 @@ export default function Home() {
                       }`}
                     >
                       {campaign.status === "aktiv"
-                        ? "Aktiv"
+                        ? "Active"
                         : campaign.status === "bereit"
-                          ? "Bereit"
+                          ? "Ready"
                           : "Demo"}
                     </span>
                     {campaign.status === "aktiv" && (
@@ -221,12 +223,12 @@ export default function Home() {
                   <div className="flex items-center gap-3 text-xs text-muted mb-4">
                     <span>{campaign.guide}</span>
                     <span className="text-border-dark">·</span>
-                    <span>{campaign.calls} Calls gescored</span>
+                    <span>{campaign.calls} scored calls</span>
                     {campaign.avgScore !== null && (
                       <>
                         <span className="text-border-dark">·</span>
                         <span className="text-success font-medium">
-                          Ø {campaign.avgScore}%
+                          Avg {campaign.avgScore}%
                         </span>
                       </>
                     )}
@@ -235,7 +237,7 @@ export default function Home() {
                   {campaign.status === "aktiv" && (
                     <div className="flex items-center gap-2 text-accent text-sm font-medium">
                       <Play className="w-3.5 h-3.5" />
-                      Training starten
+                      Start training
                     </div>
                   )}
                 </Link>
@@ -318,7 +320,7 @@ function Header() {
             href="/analysis"
             className="text-muted hover:text-foreground transition-colors uppercase tracking-[0.14em] text-xs font-semibold"
           >
-            Analysen
+            Analysis
           </Link>
           <Link
             href="/training"
@@ -360,26 +362,25 @@ function WelcomeScreen({ onAccept }: { onAccept: () => void }) {
             MEGA.TALK
           </h1>
           <p className="mt-2 text-sm text-muted font-body uppercase tracking-[0.18em]">
-            Megathon Voice Revenue Demo
+            MEGATHON Voice Revenue Demo
           </p>
         </div>
 
         <div className="mega-panel rounded-[28px] p-8">
           <div className="mega-pill mb-5">
             <span className="w-2 h-2 rounded-full bg-accent" />
-            Call-Intelligence Plattform
+            Call intelligence demo
           </div>
 
           <p className="text-sm text-muted mb-6 leading-relaxed">
-            Trainiere deine Vertriebsmitarbeiter mit KI-gestützten Personas.
-            Der Leitfaden wird live gescort — basierend auf beobachtbaren
-            Revenue-Ops-Kriterien.
+            Train your reps with AI personas.
+            The guide is scored live against observable revenue-operations criteria.
           </p>
 
           <div className="mb-4">
             <input
               type="email"
-              placeholder="deine@email.de (optional)"
+              placeholder="your@email.com (optional)"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full px-4 py-2.5 rounded-xl border border-border bg-background/80 text-sm text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent transition-colors"
@@ -394,23 +395,23 @@ function WelcomeScreen({ onAccept }: { onAccept: () => void }) {
               className="mt-0.5 w-4 h-4 rounded border-border-dark text-accent focus:ring-accent/30"
             />
             <span className="text-xs text-muted leading-relaxed">
-              Ich stimme den{" "}
+              I agree to the{" "}
               <a
                 href="/terms"
                 target="_blank"
                 className="text-accent underline underline-offset-2 hover:text-accent-hover"
               >
-                Nutzungsbedingungen
+                Terms
               </a>{" "}
-              und der{" "}
+              and the{" "}
               <a
                 href="/privacy"
                 target="_blank"
                 className="text-accent underline underline-offset-2 hover:text-accent-hover"
               >
-                Datenschutzerklärung
+                Privacy Policy
               </a>{" "}
-              zu.
+              .
             </span>
           </label>
 
@@ -419,7 +420,7 @@ function WelcomeScreen({ onAccept }: { onAccept: () => void }) {
             disabled={!agreed}
             className="w-full py-3 rounded-xl mega-button font-semibold text-sm disabled:bg-border disabled:text-muted disabled:cursor-not-allowed transition-colors shadow-sm"
           >
-            Zum Dashboard
+            Enter dashboard
           </button>
 
           <div className="mt-6 flex items-center justify-center gap-3 text-xs text-muted">

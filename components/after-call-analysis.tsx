@@ -19,153 +19,153 @@ const MOCK_CRITERIA = [
   {
     id: "k01",
     order: 1,
-    text: "Präziser Einstieg mit Name und Firma",
+    text: "Open with clear name and company",
     status: "fulfilled" as const,
     score: 0.94,
-    evidence: "Guten Tag Frau Hartmann, mein Name ist Max Winter von MEGA.TALK.",
+    evidence: "Good afternoon Ms. Hartmann, this is Max Winter from MEGA.TALK.",
   },
   {
     id: "k02",
     order: 2,
-    text: "Zuständigkeit für Revenue Ops verifizieren",
+    text: "Verify ownership of revenue operations",
     status: "fulfilled" as const,
     score: 0.88,
-    evidence: "Bin ich bei Ihnen richtig, wenn es um Gesprächsqualität, Coaching und Pipeline-Disziplin geht?",
+    evidence: "Am I right that you own conversation quality, coaching, and pipeline discipline?",
   },
   {
     id: "k03",
     order: 3,
-    text: "Operativen Schmerz statt Tool nennen",
+    text: "Lead with operating pain, not the tool",
     status: "fulfilled" as const,
     score: 0.91,
-    evidence: "Viele Teams sehen Aktivität, aber nicht, welche Gespräche wirklich Meetings erzeugen.",
+    evidence: "Many teams can see activity, but they still cannot see which conversations actually create meetings.",
   },
   {
     id: "k04",
     order: 4,
-    text: "Messbaren Hebel nennen",
+    text: "Name a measurable upside",
     status: "fulfilled" as const,
     score: 0.82,
-    evidence: "Führung sieht innerhalb von Tagen, welche Talk-Tracks Wiedervorlagen und echte nächste Schritte treiben.",
+    evidence: "Leadership can see within days which talk tracks create callbacks and real next steps.",
   },
   {
     id: "k05",
     order: 5,
-    text: "Ablauf in klaren Schritten beschreiben",
+    text: "Explain the workflow in clear steps",
     status: "fulfilled" as const,
     score: 0.95,
-    evidence: "Wir verbinden Calls, legen euren Leitfaden als Raster an und machen dann Coaching-Lücken pro Motion sichtbar.",
+    evidence: "We connect calls, map the guide as a review grid, and then expose coaching gaps by motion.",
   },
   {
     id: "k06",
     order: 6,
-    text: "Abgrenzung zu Standard-Dashboards",
+    text: "Differentiate from standard dashboards",
     status: "not_fulfilled" as const,
     score: 0.32,
-    evidence: "Auf die Frage nach bestehender Conversation-Intelligence kam keine scharfe Differenzierung.",
+    evidence: "The answer to the conversation-intelligence comparison was still not sharp enough.",
   },
   {
     id: "k07",
     order: 7,
-    text: "Führungsvorteil benennen",
+    text: "State the leadership value",
     status: "fulfilled" as const,
     score: 0.87,
-    evidence: "Dann besprechen Führung und RevOps nicht mehr aus dem Bauch heraus, sondern mit sichtbaren Gesprächssignalen.",
+    evidence: "That way leadership and RevOps stop reviewing on gut feel and start reviewing on visible conversation signals.",
   },
   {
     id: "k08",
     order: 8,
-    text: "Zeit bis Value beantworten",
+    text: "Answer time-to-value clearly",
     status: "fulfilled" as const,
     score: 0.79,
-    evidence: "Erste verwertbare Muster sehen Teams typischerweise schon in der ersten Woche.",
+    evidence: "Teams typically see the first usable patterns in the first week.",
   },
   {
     id: "k09",
     order: 9,
-    text: "Alltagsnutzer klar verorten",
+    text: "Name the daily users clearly",
     status: "fulfilled" as const,
     score: 0.85,
-    evidence: "Sales Leads coachen damit, Ops hält das Review-Raster sauber und Management sieht die Auswirkung auf die Pipeline.",
+    evidence: "Sales leads coach with it, ops keeps the review grid clean, and management sees the pipeline impact.",
   },
   {
     id: "k10",
     order: 10,
-    text: "Konkreten Discovery-Schritt vorschlagen",
+    text: "Offer a concrete discovery step",
     status: "partial" as const,
     score: 0.58,
-    evidence: "Der nächste Schritt wurde angeboten, aber Dauer und Agenda des Reviews hätten schärfer sein können.",
+    evidence: "The next step was offered, but the duration and review agenda could have been sharper.",
   },
   {
     id: "k11",
     order: 11,
-    text: "Zeitpräferenz vor Slot erfragen",
+    text: "Ask for time preference before the slot",
     status: "fulfilled" as const,
     score: 0.76,
-    evidence: "Passt Ihnen für so einen Review eher Anfang der Woche oder Ende der Woche?",
+    evidence: "Would early next week work better for that review, or later in the week?",
   },
   {
     id: "k12",
     order: 12,
-    text: "Konkreten Termin setzen",
+    text: "Lock a concrete calendar slot",
     status: "fulfilled" as const,
     score: 0.83,
-    evidence: "Dann lassen Sie uns Mittwoch um 10 Uhr einen anonymisierten Review-Flow durchgehen.",
+    evidence: "Then let us walk through an anonymized review flow on Wednesday at 10.",
   },
   {
     id: "k13",
     order: 13,
-    text: "Follow-up Kanal sichern",
+    text: "Secure the follow-up channel",
     status: "fulfilled" as const,
     score: 0.72,
-    evidence: "Ich schicke Ihnen direkt im Anschluss die Agenda und das Sample-Dashboard per Mail.",
+    evidence: "I will send the agenda and sample dashboard right after the call.",
   },
   {
     id: "k14",
     order: 14,
-    text: "ROI-Rückfrage souverän aufnehmen",
+    text: "Handle ROI pushback cleanly",
     status: "not_fulfilled" as const,
     score: 0.21,
-    evidence: "Die Rückfrage, wie schnell Coaching-Effekte messbar werden, wurde nur teilweise mit Zahlen hinterlegt.",
+    evidence: "The question about how quickly coaching impact becomes measurable was only partly backed with numbers.",
   },
   {
     id: "k15",
     order: 15,
-    text: "Wettbewerbsfrage neutral halten",
+    text: "Handle competitor comparison calmly",
     status: "fulfilled" as const,
     score: 0.90,
-    evidence: "Der Vergleich zu bestehenden QA-Tools blieb respektvoll und wurde auf Signalqualität statt Feature-Listen gelenkt.",
+    evidence: "The comparison to existing QA tools stayed respectful and focused on signal quality instead of feature lists.",
   },
   {
     id: "k16",
     order: 16,
-    text: "Nächsten administrativen Schritt abschließen",
+    text: "Close the admin next step",
     status: "fulfilled" as const,
     score: 0.93,
-    evidence: "Perfekt, dann notiere ich Ihre Mailadresse für die Einladung und das anonymisierte Sample.",
+    evidence: "Perfect, I will note your email for the invite and the anonymized sample dashboard.",
   },
 ];
 
 const MOCK_TRANSCRIPT = [
-  { speaker: "Mitarbeiter", text: "Guten Tag Frau Hartmann, mein Name ist Max Winter von MEGA.TALK." },
-  { speaker: "Leonie Hartmann", text: "Hartmann, guten Tag. Worum geht es konkret?" },
-  { speaker: "Mitarbeiter", text: "Ich melde mich, weil viele Teams zwar Aktivität sehen, aber nicht, welche Gespräche wirklich Meetings und Wiedervorlagen erzeugen." },
-  { speaker: "Leonie Hartmann", text: "Dashboards haben wir genug. Was sehen wir bei Ihnen anders?" },
-  { speaker: "Mitarbeiter", text: "Sie sehen nicht nur Transkripte, sondern welche Talk-Tracks, Einwände und Leitfaden-Schritte tatsächlich Pipeline-Momentum auslösen." },
-  { speaker: "Leonie Hartmann", text: "Und wer nutzt das dann im Alltag?" },
-  { speaker: "Mitarbeiter", text: "Sales Leads coachen damit, Ops hält die Review-Logik sauber, und Führung bekommt belegbare Signal-Muster statt Bauchgefühl." },
-  { speaker: "Leonie Hartmann", text: "Wie schnell ist so etwas verwertbar?" },
-  { speaker: "Mitarbeiter", text: "Erste Muster sehen Teams oft in der ersten Woche, weil wir Calls anbinden, den Leitfaden als Raster anlegen und Outcomes sauber clustern." },
-  { speaker: "Leonie Hartmann", text: "Okay, das ist zumindest konkreter als das meiste, was ich höre." },
-  { speaker: "Mitarbeiter", text: "Dann würde ich Ihnen gern in 20 Minuten einen anonymisierten Review-Flow zeigen — mit echten Coaching-Lücken und Signalverteilungen." },
-  { speaker: "Leonie Hartmann", text: "Anfang der Woche wäre besser als Ende der Woche." },
-  { speaker: "Mitarbeiter", text: "Dann lassen Sie uns Mittwoch um 10 Uhr gehen. Ich schicke Ihnen direkt danach Agenda und Sample-Dashboard." },
-  { speaker: "Leonie Hartmann", text: "Passt. Schicken Sie es an l.hartmann@nordstern-industrie.de." },
+  { speaker: "Rep", text: "Good afternoon Ms. Hartmann, this is Max Winter from MEGA.TALK." },
+  { speaker: "Leonie Hartmann", text: "Hartmann speaking. What exactly is this about?" },
+  { speaker: "Rep", text: "Most sales teams can see activity, but they still cannot see which conversations actually create meetings and callbacks." },
+  { speaker: "Leonie Hartmann", text: "We already have dashboards. What would be different here?" },
+  { speaker: "Rep", text: "You would not just see transcripts. You would see which talk tracks, objections, and guide moments actually create pipeline momentum." },
+  { speaker: "Leonie Hartmann", text: "Who uses it every day?" },
+  { speaker: "Rep", text: "Sales leads use it to coach, operations keeps the review logic clean, and leadership gets proof instead of gut feel." },
+  { speaker: "Leonie Hartmann", text: "How quickly would that become useful?" },
+  { speaker: "Rep", text: "Teams usually see the first usable patterns in the first week because we connect calls, map the guide, and cluster outcomes fast." },
+  { speaker: "Leonie Hartmann", text: "That is more concrete than most of what I hear." },
+  { speaker: "Rep", text: "Then let me show you a 20-minute anonymized review flow with real coaching gaps and signal distribution." },
+  { speaker: "Leonie Hartmann", text: "Early next week works better than later in the week." },
+  { speaker: "Rep", text: "Great. Let us lock Wednesday at 10. I will send the agenda and sample dashboard right after this." },
+  { speaker: "Leonie Hartmann", text: "That works. Send it to l.hartmann@nordstern-industrie.de." },
 ];
 
 const OVERALL_SCORE = 78;
 const DURATION = "4:23";
-const DATE = "20. Juni 2026 · 14:30 Uhr";
+const DATE = "June 20, 2026 · 2:30 PM";
 const EMPLOYEE = "Rep-01";
 
 function getStatusIcon(status: string) {
@@ -184,11 +184,11 @@ function getStatusIcon(status: string) {
 function getStatusLabel(status: string) {
   switch (status) {
     case "fulfilled":
-      return "Erfüllt";
+      return "Met";
     case "partial":
-      return "Teilweise";
+      return "Partial";
     case "not_fulfilled":
-      return "Nicht erfüllt";
+      return "Missed";
     default:
       return "";
   }
@@ -231,7 +231,7 @@ export function AfterCallAnalysis({ onBack }: { onBack?: () => void }) {
           className="inline-flex items-center gap-1.5 text-sm text-muted hover:text-foreground transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
-          Zurück zum Training
+          Back to training
         </button>
       )}
 
@@ -240,7 +240,7 @@ export function AfterCallAnalysis({ onBack }: { onBack?: () => void }) {
         <div className="mega-panel mega-hover-lift rounded-2xl p-5">
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs text-muted uppercase tracking-wider font-medium">
-              Script Adherence Score
+              Guide adherence score
             </span>
             <Target className="w-4 h-4 text-accent" />
           </div>
@@ -252,7 +252,7 @@ export function AfterCallAnalysis({ onBack }: { onBack?: () => void }) {
         <div className="mega-panel mega-hover-lift rounded-2xl p-5">
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs text-muted uppercase tracking-wider font-medium">
-              Kriterien
+              Criteria
             </span>
             <FileText className="w-4 h-4 text-accent" />
           </div>
@@ -260,16 +260,16 @@ export function AfterCallAnalysis({ onBack }: { onBack?: () => void }) {
             {fulfilled + partial}/{MOCK_CRITERIA.length}
           </p>
           <div className="mt-2 flex gap-2 text-xs">
-            <span className="text-success">{fulfilled} erfüllt</span>
-            <span className="text-warning">{partial} teilweise</span>
-            <span className="text-error">{notFulfilled} verfehlt</span>
+            <span className="text-success">{fulfilled} met</span>
+            <span className="text-warning">{partial} partial</span>
+            <span className="text-error">{notFulfilled} missed</span>
           </div>
         </div>
 
         <div className="mega-panel mega-hover-lift rounded-2xl p-5">
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs text-muted uppercase tracking-wider font-medium">
-              Dauer
+              Duration
             </span>
             <Clock className="w-4 h-4 text-accent" />
           </div>
@@ -295,13 +295,13 @@ export function AfterCallAnalysis({ onBack }: { onBack?: () => void }) {
       <div className="mega-panel rounded-2xl p-5 mega-shimmer">
         <h3 className="text-sm font-semibold text-foreground mb-4 flex items-center gap-2">
           <TrendingUp className="w-4 h-4 text-accent" />
-          Pipeline-Durchlauf
+          Pipeline run
         </h3>
         <div className="flex items-center gap-2 text-xs">
           {[
             { label: "Audio", done: true },
             { label: "AssemblyAI", done: true },
-            { label: "Transkript", done: true },
+            { label: "Transcript", done: true },
             { label: "HF NLI", done: true },
             { label: "Score", done: true },
           ].map((step, i) => (
@@ -328,10 +328,10 @@ export function AfterCallAnalysis({ onBack }: { onBack?: () => void }) {
       <div className="mega-panel rounded-2xl overflow-hidden">
         <div className="px-5 py-4 border-b border-border flex items-center justify-between">
           <h3 className="text-sm font-semibold text-foreground">
-            Leitfaden-Kriterien
+            Guide criteria
           </h3>
           <span className="text-xs text-muted">
-            {fulfilled + partial}/{MOCK_CRITERIA.length} bestanden
+            {fulfilled + partial}/{MOCK_CRITERIA.length} passed
           </span>
         </div>
 
@@ -373,13 +373,13 @@ export function AfterCallAnalysis({ onBack }: { onBack?: () => void }) {
                 <div className="px-5 pb-4 pt-0 bg-accent/5">
                   <div className="ml-9 space-y-2">
                     <div>
-                      <span className="text-xs text-muted">NLI-Score: </span>
+                      <span className="text-xs text-muted">NLI score: </span>
                       <span className="text-xs font-mono font-medium text-foreground">
                         {(criterion.score * 100).toFixed(0)}%
                       </span>
                     </div>
                     <div className="bg-card rounded-lg border border-border p-3">
-                      <p className="text-xs text-muted mb-1">Evidenz aus Transkript:</p>
+                      <p className="text-xs text-muted mb-1">Transcript evidence:</p>
                       <p className="text-sm text-foreground italic">
                         &ldquo;{criterion.evidence}&rdquo;
                       </p>
@@ -400,7 +400,7 @@ export function AfterCallAnalysis({ onBack }: { onBack?: () => void }) {
         >
           <h3 className="text-sm font-semibold text-foreground flex items-center gap-2">
             <FileText className="w-4 h-4 text-accent" />
-            Transkript
+            Transcript
           </h3>
           {showTranscript ? (
             <ChevronUp className="w-4 h-4 text-muted" />
@@ -414,18 +414,18 @@ export function AfterCallAnalysis({ onBack }: { onBack?: () => void }) {
             {MOCK_TRANSCRIPT.map((entry, i) => (
               <div
                 key={i}
-                className={`flex items-start gap-3 ${
-                  entry.speaker !== "Mitarbeiter" ? "opacity-70" : ""
+                  className={`flex items-start gap-3 ${
+                  entry.speaker !== "Rep" ? "opacity-70" : ""
                 }`}
               >
                 <div
                   className={`flex-shrink-0 w-16 text-xs font-medium px-2 py-1 rounded ${
-                    entry.speaker === "Mitarbeiter"
+                    entry.speaker === "Rep"
                       ? "bg-accent/10 text-accent"
                       : "bg-muted text-muted"
                   }`}
                 >
-                  {entry.speaker === "Mitarbeiter" ? "Agentin" : "Persona"}
+                  {entry.speaker === "Rep" ? "Rep" : "Persona"}
                 </div>
                 <p className="text-sm text-foreground leading-relaxed">
                   {entry.text}
@@ -439,28 +439,25 @@ export function AfterCallAnalysis({ onBack }: { onBack?: () => void }) {
       {/* Coaching Note */}
       <div className="mega-panel rounded-2xl p-5 animate-float-soft">
         <h3 className="text-sm font-semibold text-foreground mb-2">
-          Coaching-Hinweise
+          Coaching notes
         </h3>
         <ul className="space-y-2 text-sm text-foreground/80">
           <li className="flex items-start gap-2">
             <span className="text-warning flex-shrink-0">→</span>
             <span>
-              <strong>Grund erklären:</strong> Wenn der Empfang nachfragt, kurz erklären
-              und mit einer Frage zurückführen.
+              <strong>Differentiate faster:</strong> Answer the dashboard objection with a sharper before-vs-after contrast.
             </span>
           </li>
           <li className="flex items-start gap-2">
             <span className="text-warning flex-shrink-0">→</span>
             <span>
-              <strong>Zeitlicher Vorteil:</strong> "Statt Wochen" als konkreten
-              Vergleich nennen — das ist der stärkste USP.
+              <strong>Quantify impact:</strong> Put time-to-value and coaching proof into numbers earlier in the conversation.
             </span>
           </li>
           <li className="flex items-start gap-2">
             <span className="text-warning flex-shrink-0">→</span>
             <span>
-              <strong>Zeitpräferenz:</strong> Erst Präferenz erfragen (vormittags/
-              nachmittags), dann konkreten Termin nennen.
+              <strong>Protect the close:</strong> Keep the two-step close — preference first, slot second — because it preserves control without pressure.
             </span>
           </li>
         </ul>

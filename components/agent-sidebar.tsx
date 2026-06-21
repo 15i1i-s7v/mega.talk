@@ -8,13 +8,13 @@ const PLACEHOLDER_PERSONAS = [
     name: "Mira Seidel",
     role: "VP Inside Sales",
     company: "Aurelia Commerce Group",
-    location: "Köln, Deutschland",
+    location: "Cologne, Germany",
     category: "RevOps",
     callType: "Discovery",
     difficulty: 4,
     languages: [
-      { flag: "🇩🇪", name: "Deutsch", level: "Muttersprache" },
-      { flag: "🇬🇧", name: "Englisch", level: "Fließend" },
+      { flag: "🇩🇪", name: "German", level: "Native" },
+      { flag: "🇬🇧", name: "English", level: "Fluent" },
     ],
     locked: true,
   },
@@ -22,24 +22,24 @@ const PLACEHOLDER_PERSONAS = [
     name: "Jonas Eckert",
     role: "Sales Director DACH",
     company: "Helion Systems",
-    location: "Stuttgart, Deutschland",
+    location: "Stuttgart, Germany",
     category: "Pipeline QA",
-    callType: "Erstkontakt",
+    callType: "First touch",
     difficulty: 3,
-    languages: [{ flag: "🇩🇪", name: "Deutsch", level: "Muttersprache" }],
+    languages: [{ flag: "🇩🇪", name: "German", level: "Native" }],
     locked: true,
   },
   {
     name: "Sara Blum",
     role: "Head of Revenue Excellence",
     company: "Helvetic Cloud Works",
-    location: "Zürich, Schweiz",
+    location: "Zurich, Switzerland",
     category: "Coaching",
-    callType: "Erstkontakt",
+    callType: "First touch",
     difficulty: 5,
     languages: [
-      { flag: "🇩🇪", name: "Deutsch", level: "Muttersprache" },
-      { flag: "🇬🇧", name: "Englisch", level: "Fließend" },
+      { flag: "🇩🇪", name: "German", level: "Native" },
+      { flag: "🇬🇧", name: "English", level: "Fluent" },
     ],
     locked: true,
   },
@@ -53,7 +53,7 @@ export function AgentSidebar() {
           Personas
         </h3>
         <p className="text-xs text-muted mt-0.5">
-          Wähle eine Kampagne zum Üben
+          Choose a motion to practice
         </p>
       </div>
 
@@ -64,7 +64,7 @@ export function AgentSidebar() {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-success opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-success"></span>
           </span>
-          <span className="text-xs font-medium text-success">Aktiv</span>
+          <span className="text-xs font-medium text-success">Active</span>
         </div>
         <p className="font-semibold text-foreground text-sm">{PERSONA.name}</p>
         <p className="text-xs text-muted">{PERSONA.role}</p>

@@ -12,9 +12,9 @@ import {
 import { OUTCOME_MIX, SIGNAL_OVERVIEW, VOLUME_TREND } from "@/lib/data";
 
 const STATS = [
-  { label: "Tracked Calls", value: SIGNAL_OVERVIEW.trackedCalls.toLocaleString("de-DE"), icon: Target, trend: "CSV-ground truth · anonymisiert" },
-  { label: "Callback Intent", value: `${SIGNAL_OVERVIEW.callbackIntentRate}%`, icon: TrendingUp, trend: "stärkstes Signal vor Pipeline-Weitergabe" },
-  { label: "Ø Gesprächsdauer", value: `${SIGNAL_OVERVIEW.avgCallSeconds}s`, icon: BarChart3, trend: "lange positive Gespräche liegen deutlich höher" },
+  { label: "Tracked Calls", value: SIGNAL_OVERVIEW.trackedCalls.toLocaleString("en-US"), icon: Target, trend: "anonymized CSV ground truth" },
+  { label: "Callback Intent", value: `${SIGNAL_OVERVIEW.callbackIntentRate}%`, icon: TrendingUp, trend: "strongest visible pre-pipeline signal" },
+  { label: "Avg Talk Time", value: `${SIGNAL_OVERVIEW.avgCallSeconds}s`, icon: BarChart3, trend: "positive conversations run materially longer" },
   { label: "GDPR-Status", value: "Compliant", icon: Shield, trend: "One-Sided Recording" },
 ];
 
@@ -42,7 +42,7 @@ export default function AnalysisPage() {
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-sm font-semibold text-foreground flex items-center gap-2">
               <Target className="w-4 h-4 text-accent" />
-              Pipeline-Status
+              Pipeline status
             </h2>
             <div className="flex items-center gap-2">
               <span className="relative flex h-2.5 w-2.5">
@@ -64,7 +64,7 @@ export default function AnalysisPage() {
               </div>
             ))}
             <span className="text-xs text-muted ml-3">
-              Letzter Durchlauf: vor 12 Min
+              Last run: 12 min ago
             </span>
           </div>
         </div>
@@ -111,7 +111,7 @@ export default function AnalysisPage() {
           <div className="mega-panel rounded-2xl p-5">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-sm font-semibold text-foreground">Volume Cadence</h2>
-              <span className="text-xs text-muted">last observed active days</span>
+              <span className="text-xs text-muted">when should we call?</span>
             </div>
             <div className="flex items-end gap-3 h-44">
               {VOLUME_TREND.map((point) => (
@@ -135,9 +135,9 @@ export default function AnalysisPage() {
           </div>
           <div className="divide-y divide-border">
             {[
-              ["Callback intent dominates", "58%", "Reps create follow-up momentum far more often than hard positive closes."],
-              ["Positive calls are long", "448s avg", "Closed-positive conversations are materially longer than neutral or negative outcomes."],
-              ["Tag hygiene still leaks signal", "17% unknown", "Outcome discipline is a product opportunity: MEGA.TALK can force cleaner review workflows."],
+              ["Best time to call", "08:00–12:00", "Morning blocks lead on callback intent, with the strongest performance before noon."],
+              ["What should be coached first", "Negative + unknown clusters", "Start with weak qualification and missing outcome discipline before changing the rest of the motion."],
+              ["What should scale to every rep", "Long-form positive talk tracks", "Positive calls stay alive much longer, so the best discovery pattern should be turned into a team play."],
             ].map(([title, metric, note]) => (
               <div key={title} className="flex items-center justify-between px-5 py-3.5 text-sm hover:bg-accent/5 transition-colors mega-hover-lift">
                 <div className="flex items-center gap-3">
@@ -160,17 +160,17 @@ export default function AnalysisPage() {
         {/* CTA */}
         <div className="mega-panel rounded-2xl p-6 text-center">
           <h2 className="font-display text-xl font-semibold text-foreground mb-2">
-            Bereit für dein Training?
+            Ready for live coaching?
           </h2>
           <p className="text-sm text-muted mb-4">
-            Trainiere Discovery Calls mit Leonie Hartmann — live gescort gegen den Enablement-Leitfaden.
+            Run an English discovery call with Leonie Hartmann and score it live against the enablement guide.
           </p>
           <Link
             href="/training"
             className="mega-button inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-transform hover:scale-[1.02]"
           >
             <Phone className="w-4 h-4" />
-            Training starten
+            Start training
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
@@ -198,7 +198,7 @@ function Header() {
             Dashboard
           </Link>
           <Link href="/analysis" className="text-accent font-semibold uppercase tracking-[0.14em] text-xs">
-            Analysen
+            Analysis
           </Link>
           <Link
             href="/training"
