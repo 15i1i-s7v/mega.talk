@@ -76,29 +76,38 @@
 
 ## Plan: Wie wir alle SoftBCom-Leads signen
 
-1. **Jetzt (parallel laufend):** Die bereits angestoßenen Threads zu Ende bringen —
-   Daniel Rexhausen/Dialogminds (Intro-Bitte läuft), Stefan Gerbracht/Tolksdorf (Follow-up
-   raus), dann VIAFON, KiKxxl, DialogUnion, Azur Dialog anschreiben, Jörn Schmidt/Kuck & Schmidt
-   frisch nachfassen. Ziel: die nächsten 2–3 Abschlüsse, **bevor** SoftBCom kontaktiert wird.
-2. **Sofort klären:** den unklaren "Johann"-Lead identifizieren (Name, Firma, LinkedIn) und die
+1. **Jetzt, fünf konkrete Sends (#9–#13):** VIAFON, KiKxxl, DialogUnion, Azur Dialog anschreiben,
+   Jörn Schmidt/Kuck & Schmidt frisch nachfassen. Rexhausen/Dialogminds (Intro-Bitte) und
+   Gerbracht/Tolksdorf (Follow-up) laufen bereits, keine neue Aktion nötig.
+2. **Sofort (#2):** den unklaren "Johann"-Lead identifizieren (Name, Firma, LinkedIn) und die
    fertige Entwurfs-Mail erst nach Bestätigung verschicken.
-3. **Laufend:** SoftBComs LinkedIn-/Social-Follower systematisch durchgehen, um weitere
+3. **Laufend (#3):** SoftBComs LinkedIn-/Social-Follower systematisch durchgehen, um weitere
    Kandidaten zu den bestehenden sechs zu finden.
-4. **Nach 2 bestätigten Abschlüssen:** SoftBCom direkt ansprechen — Ziel ist eine
-   Umsatzpartnerschaft/Intro-Vereinbarung zu ihrem Kundenstamm, kein Verkauf der Firma an sie.
-5. **Bewusst zurückgestellt, nicht vergessen:** der Event-Auftritt neben SoftBComs Stand — erst
-   nach mindestens 1–2 weiteren Kundenpitches erneut bewerten.
-6. **Parallel, Business-Housekeeping:** Rechnungsstruktur für neue Kunden festlegen,
-   Kleinunternehmer-Grenze (~20k €/Jahr) im Blick behalten als Auslöser für die UG-Gründung,
-   und das 51%-Angebot von Johann mit Max besprechen/entscheiden.
+4. **Jetzt schon vorbereiten, aber Versand gesperrt (#4):** SoftBCom-Umsatzpartnerschafts-Pitch
+   entwerfen — Versand erst nach 2 bestätigten Abschlüssen aus #9–#13.
+5. **Bewusst zurückgestellt, nicht vergessen (#7):** der Event-Auftritt neben SoftBComs Stand —
+   erst nach mindestens 1–2 weiteren Kundenpitches erneut bewerten.
+6. **Parallel, Business-Housekeeping (#5, #6, #8):** Rechnungsstruktur für neue Kunden festlegen,
+   Kleinunternehmer-Grenze (~20k €/Jahr) im Blick behalten als Auslöser für die UG-Gründung, das
+   51%-Angebot von Johann mit Max besprechen/entscheiden, und ein wöchentliches Pipeline-Review
+   gegen das 10k-€/6-Leads-Ziel einrichten.
 
 ## Offene Business-Issues (GitHub, zugewiesen an Makebert)
 
-- [#1 — 2-3 weitere Kunden ASAP abschließen (vor SoftBCom-Direktkontakt)](https://github.com/15i1i-s7v/mega.talk/issues/1)
+> Bewusst input-basiert formuliert: jede Issue ist eine Aktivität, die Max an einem konkreten Tag
+> tatsächlich ausführen kann, nicht ein Ergebnis, das von anderen abhängt. #1 ("Kunden
+> abschließen") wurde deshalb durch #9–#13 ersetzt.
+
+- ~~[#1 — 2-3 weitere Kunden ASAP abschließen](https://github.com/15i1i-s7v/mega.talk/issues/1)~~ — geschlossen, ersetzt durch #9–#13
 - [#2 — Unklaren "Johann"-Lead identifizieren, dann Entwurfsmail senden](https://github.com/15i1i-s7v/mega.talk/issues/2)
 - [#3 — SoftBCom LinkedIn/Social-Follower nach weiteren Leads durchsuchen](https://github.com/15i1i-s7v/mega.talk/issues/3)
-- [#4 — Nach 2 Abschlüssen: SoftBCom direkt für Umsatzpartnerschaft ansprechen](https://github.com/15i1i-s7v/mega.talk/issues/4)
+- [#4 — SoftBCom-Umsatzpartnerschafts-Pitch entwerfen (Versand erst nach 2 Abschlüssen)](https://github.com/15i1i-s7v/mega.talk/issues/4)
 - [#5 — Gemeinsame UG-Gründung mit Johann verhandeln (51%-Vorschlag)](https://github.com/15i1i-s7v/mega.talk/issues/5)
 - [#6 — Rechnungsstruktur für neue Kunden festlegen](https://github.com/15i1i-s7v/mega.talk/issues/6)
 - [#7 — Entscheidung: Event-Auftritt neben SoftBComs Stand (geparkt)](https://github.com/15i1i-s7v/mega.talk/issues/7)
-- [#8 — Ziel tracken: 10.000 € Umsatz bis Ende 2026 / 6 SoftBCom-Leads (~36k € ACV)](https://github.com/15i1i-s7v/mega.talk/issues/8)
+- [#8 — Wöchentliches Pipeline-Review gegen das 10k-€/6-Leads-Ziel einrichten](https://github.com/15i1i-s7v/mega.talk/issues/8)
+- [#9 — Outreach an VIAFON senden](https://github.com/15i1i-s7v/mega.talk/issues/9)
+- [#10 — Outreach an KiKxxl senden](https://github.com/15i1i-s7v/mega.talk/issues/10)
+- [#11 — Outreach an DialogUnion senden](https://github.com/15i1i-s7v/mega.talk/issues/11)
+- [#12 — Outreach an Azur Dialog senden](https://github.com/15i1i-s7v/mega.talk/issues/12)
+- [#13 — Frische Follow-up-Nachricht an Jörn Schmidt senden](https://github.com/15i1i-s7v/mega.talk/issues/13)
