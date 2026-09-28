@@ -94,4 +94,11 @@
 
 ## Offene Business-Issues (GitHub, zugewiesen an Makebert)
 
-Siehe Issues im Repo — Nummern werden nach dem Anlegen ergänzt.
+- [#1 — 2-3 weitere Kunden ASAP abschließen (vor SoftBCom-Direktkontakt)](https://github.com/15i1i-s7v/mega.talk/issues/1)
+- [#2 — Unklaren "Johann"-Lead identifizieren, dann Entwurfsmail senden](https://github.com/15i1i-s7v/mega.talk/issues/2)
+- [#3 — SoftBCom LinkedIn/Social-Follower nach weiteren Leads durchsuchen](https://github.com/15i1i-s7v/mega.talk/issues/3)
+- [#4 — Nach 2 Abschlüssen: SoftBCom direkt für Umsatzpartnerschaft ansprechen](https://github.com/15i1i-s7v/mega.talk/issues/4)
+- [#5 — Gemeinsame UG-Gründung mit Johann verhandeln (51%-Vorschlag)](https://github.com/15i1i-s7v/mega.talk/issues/5)
+- [#6 — Rechnungsstruktur für neue Kunden festlegen](https://github.com/15i1i-s7v/mega.talk/issues/6)
+- [#7 — Entscheidung: Event-Auftritt neben SoftBComs Stand (geparkt)](https://github.com/15i1i-s7v/mega.talk/issues/7)
+- [#8 — Ziel tracken: 10.000 € Umsatz bis Ende 2026 / 6 SoftBCom-Leads (~36k € ACV)](https://github.com/15i1i-s7v/mega.talk/issues/8)
